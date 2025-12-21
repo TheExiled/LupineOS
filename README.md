@@ -21,7 +21,7 @@ ______________________________________________________________________
 1. **Install Host:** Fedora Atomic (Silverblue/Kinoite) with COSMIC Desktop.
 1. **Clone Repo:**
    ```bash
-   git clone https://github.com/YOUR_GITHUB_USERNAME/LupineOS.git ~/LupineOS
+   git clone https://github.com/TheExiled/LupineOS.git ~/LupineOS
    ```
 1. **Run Installer:**
    ```bash
