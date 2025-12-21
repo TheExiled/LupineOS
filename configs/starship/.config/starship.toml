@@ -1,0 +1,21 @@
+format = "${custom.dev_context}${custom.sysadmin_context}${custom.sec_context}$all"
+
+# --- DISTROBOX CONTEXT BADGES ---
+
+[custom.dev_context]
+command = "echo '🚧 DEV'"
+when = 'test "$DISTROBOX_ENTER_NAME" = "dev"'
+style = "bold #ffaf00"
+format = "[$output]($style) "
+
+[custom.sysadmin_context]
+command = "echo '⚡ SYS'"
+when = 'test "$DISTROBOX_ENTER_NAME" = "admin"'
+style = "bold blue"
+format = "[$output]($style) "
+
+[custom.sec_context]
+command = "echo '💀 SEC'"
+when = 'test "$DISTROBOX_ENTER_NAME" = "sec"'
+style = "bold red"
+format = "[$output]($style) "

@@ -1,0 +1,15 @@
+themes {
+    ashen {
+        fg "#e6e6e6"
+        bg "#1c1c1c"
+        black "#101010"
+        red "#af5f5f"
+        green "#87af87"
+        yellow "#d7af87"
+        blue "#8787af"
+        magenta "#af87af"
+        cyan "#87afaf"
+        white "#d0d0d0"
+        orange "#d7af87"
+    }
+}

@@ -1,0 +1,69 @@
+# --- PYTHON CONFIGURATION ---
+
+[[language]]
+name = "python"
+scope = "source.python"
+roots = ["pyproject.toml", "setup.py", "poetry.lock", ".git"]
+# 1. FORMATTER: Use Ruff
+formatter = { command = "/home/exile/.local/bin/ruff", args = ["format", "-"] }
+auto-format = true
+
+# 2. LSPs: Use both Pylsp (Jedi) and Ruff (Linter)
+language-servers = [ "pylsp", "ruff" ]
+
+# 3. DEBUG ADAPTER: Use debugpy
+[language.debugger]
+name = "debugpy"
+transport = "stdio"
+command = "python3"
+args = ["-m", "debugpy.adapter"]
+
+[[language.debugger.templates]]
+name = "Run"
+request = "launch"
+completion = [ { name = "main", completion = "filename", default = "." } ]
+args = { program = "{0}" }
+
+# --- SERVER CONFIGURATION ---
+
+# Configure Pylsp (Jedi)
+[language-server.pylsp]
+command = "pylsp"
+
+[language-server.pylsp.config.pylsp.plugins]
+# Enable Jedi for awesome completion
+jedi_completion = { enabled = true }
+jedi_hover = { enabled = true }
+jedi_references = { enabled = true }
+jedi_signature_help = { enabled = true }
+
+# DISABLE Pylsp's built-in linters (We use Ruff for this)
+# If we don't disable these, you get double error messages.
+pycodestyle = { enabled = false }
+mccabe = { enabled = false }
+pyflakes = { enabled = false }
+autopep8 = { enabled = false }
+yapf = { enabled = false }
+
+# Configure Ruff (The Linter)
+[language-server.ruff]
+command = "/home/exile/.local/bin/ruff"
+args = ["server"]
+
+[language-server.ruff.config.settings]
+args = ["--ignore", "E501"] # Example: Ignore line length errors
+
+
+[[language]]
+name = "markdown"
+scope = "source.markdown"
+roots = [".git", ".bacon"]
+# Use mdformat (Python) for tidying up
+formatter = { command = "/home/exile/.local/bin/mdformat", args = ["-"] }
+auto-format = true
+# Use Markdown-Oxide (Rust) for brains
+language-servers = [ "markdown-oxide" ]
+
+[language-server.markdown-oxide]
+# If Helix can't find it, replace "markdown-oxide" with: "/home/exile/.cargo/bin/markdown-oxide"
+command = "markdown-oxide"

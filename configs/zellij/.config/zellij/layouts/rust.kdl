@@ -1,0 +1,36 @@
+layout {
+    default_tab_template {
+        children
+        pane size=1 borderless=true {
+            plugin location="zellij:compact-bar"
+        }
+    }
+
+    tab name="Rust" focus=true {
+        pane split_direction="vertical" {
+            
+            // --- NEW PANE: Gemini CLI (Far Left) ---
+            // We use the same absolute path to distrobox as your runner
+            pane size="20%" name="Gemini" command="/home/linuxbrew/.linuxbrew/bin/distrobox" {
+                args "enter" "dev" "--" "gemini" "chat"
+                close_on_exit false
+            }
+
+            // --- PANE 2: Editor (Middle) ---
+            // Reduced from 65% to 55% to make room for Gemini
+            pane size="55%" focus=true name="Editor"
+
+            // --- RIGHT COLUMN: Runner & Git ---
+            pane split_direction="horizontal" {
+                
+                // PANE 3: Runner (Top Right)
+                pane name="Cargo Runner" command="/home/linuxbrew/.linuxbrew/bin/distrobox" {
+                    args "enter" "dev"
+                }
+
+                // PANE 4: Git (Bottom Right)
+                pane name="Git" command="/home/linuxbrew/.linuxbrew/bin/lazygit"
+            }
+        }
+    }
+}
