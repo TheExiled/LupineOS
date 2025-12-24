@@ -7,3 +7,4 @@
 *.zip
 *.zip
 aws/
+cosign.key

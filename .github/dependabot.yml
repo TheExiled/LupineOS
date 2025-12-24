@@ -1,13 +1,5 @@
-# To get started with Dependabot version updates, you'll need to specify which
-# package ecosystems to update and where the package manifests are located.
-# Please see the documentation for all configuration options:
-# https://docs.github.com/code-security/dependabot/dependabot-version-updates/configuration-options-for-the-dependabot.yml-file
-
-
 version: 2
 updates:
-  # 1. Maintain GitHub Actions (CRITICAL)
-  # This keeps your ISO generation pipeline (BlueBuild) secure.
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:
@@ -16,17 +8,3 @@ updates:
       actions:
         patterns:
           - "*"
-
-  # 2. Maintain Python (For your scripts)
-  # Useful if you add a requirements.txt later.
-  - package-ecosystem: "pip"
-    directory: "/"
-    schedule:
-      interval: "weekly"
-
-  # 3. Maintain Rust (For your tools)
-  # Useful if you add a Cargo.toml later.
-  - package-ecosystem: "cargo"
-    directory: "/"
-    schedule:
-      interval: "weekly"
