@@ -1,0 +1,31 @@
+name: build-lupineos
+on:
+  schedule:
+    - cron: "00 17 * * *" # Build daily at 5pm UTC
+  push:
+    paths-ignore: # Don't build if only docs change
+      - "**.md"
+    branches:
+      - main
+
+jobs:
+  bluebuild:
+    name: Build LupineOS
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+      id-token: write
+    strategy:
+      fail-fast: false
+      matrix:
+        recipe:
+          - config/recipe.yml
+    steps:
+      - name: Build Custom Image
+        uses: blue-build/github-action@v1.6
+        with:
+          recipe: ${{ matrix.recipe }}
+          cosign_private_key: ${{ secrets.SIGNING_SECRET }}
+          registry_token: ${{ github.token }}
+          pr_event_number: ${{ github.event.number }}

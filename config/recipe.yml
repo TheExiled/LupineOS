@@ -1,0 +1,57 @@
+# config/recipe.yml
+name: lupineos
+description: "The WolfPack - Custom Fedora Atomic Workstation"
+base-image: ghcr.io/ublue-os/cosmic
+image-version: 40 # Matches current Fedora Stable
+
+modules:
+  - type: files
+    files:
+      - source: configs
+        destination: /etc/skel/.config
+      - source: scripts
+        destination: /opt/lupineos/scripts
+      - source: assets
+        destination: /opt/lupineos/assets
+
+  - type: rpm-ostree
+    repos:
+      # Starship Repo
+      - https://copr.fedorainfracloud.org/coprs/atim/starship/repo/fedora-%OS_VERSION%/atim-starship-fedora-%OS_VERSION%.repo
+    install:
+      # Core Tools (The "Native Binaries" from your README)
+      - zsh
+      - starship
+      - helix
+      - eza
+      - ripgrep
+      - bat
+      - zoxide
+      - distrobox
+      - fastfetch
+      # Shell management
+      - util-linux-user # Required for chsh
+
+  - type: default-flatpaks
+    notify: true
+    system:
+      # Gaming / GUI Stack
+      - repo-url: https://dl.flathub.org/repo/flathub.flatpakrepo
+        install:
+          - com.valvesoftware.Steam
+          - com.heroicgameslauncher.hgl
+          - net.lutris.Lutris
+          - dev.vencord.Vesktop
+          - com.github.tchx84.Flatseal
+          - io.github.flattool.Warehouse
+
+  - type: systemd
+    system:
+      enabled:
+        - podman.socket
+
+  - type: script
+    scripts:
+      # This runs scripts/setup_sandbox.sh during build if you want (optional)
+      # or just ensuring permissions are set correct
+      - post_install.sh
