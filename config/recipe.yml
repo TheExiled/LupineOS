@@ -16,34 +16,52 @@ modules:
 
   - type: rpm-ostree
     repos:
-      # Starship Repo
+      # Starship Prompt
       - https://copr.fedorainfracloud.org/coprs/atim/starship/repo/fedora-%OS_VERSION%/atim-starship-fedora-%OS_VERSION%.repo
+      # Yazi File Manager (Bleeding Edge)
+      - https://copr.fedorainfracloud.org/coprs/sentry/yazi/repo/fedora-%OS_VERSION%/sentry-yazi-fedora-%OS_VERSION%.repo
+
     install:
-      # Core Tools (The "Native Binaries" from your README)
+      # --- Core Shell ---
+      - git
       - zsh
-      - starship
-      - helix
-      - eza
-      - ripgrep
-      - bat
-      - zoxide
-      - distrobox
-      - fastfetch
-      # Shell management
       - util-linux-user # Required for chsh
+      - starship
+      - stow
+
+      # --- WolfPack CLI Tools ---
+      - helix
+      - neovim
+      - eza          # ls replacement
+      - ripgrep      # grep replacement
+      - bat          # cat replacement
+      - zoxide       # cd replacement
+      - yazi         # file manager
+      - fzf          # fuzzy finder
+      - fd-find      # find replacement (fd)
+      - tldr         # help replacement
+      - fastfetch    # system info
+      - distrobox
+      
+      # --- Container Compatibility ---
+      - podman-docker # Allows typing 'docker' commands
 
   - type: default-flatpaks
     notify: true
     system:
-      # Gaming / GUI Stack
-      - repo-url: https://dl.flathub.org/repo/flathub.flatpakrepo
-        install:
-          - com.valvesoftware.Steam
-          - com.heroicgameslauncher.hgl
-          - net.lutris.Lutris
-          - dev.vencord.Vesktop
-          - com.github.tchx84.Flatseal
-          - io.github.flattool.Warehouse
+      # --- Gaming Stack ---
+      - com.valvesoftware.Steam
+      - com.heroicgameslauncher.hgl
+      - net.lutris.Lutris
+      - net.davidotek.pupgui2      # ProtonUp-Qt (Manages Proton GE)
+
+      # --- Social & Media ---
+      - dev.vencord.Vesktop        # Discord with Screen Share
+
+      # --- System Utils ---
+      - com.github.tchx84.Flatseal # Permission manager
+      - io.github.flattool.Warehouse # Flatpak manager
+      - io.missioncenter.MissionCenter # System Monitor
 
   - type: systemd
     system:
@@ -52,6 +70,4 @@ modules:
 
   - type: script
     scripts:
-      # This runs scripts/setup_sandbox.sh during build if you want (optional)
-      # or just ensuring permissions are set correct
       - post_install.sh
