@@ -26,7 +26,7 @@ jobs:
         run: git config --global --add safe.directory $GITHUB_WORKSPACE
 
       - name: Build Custom Image
-        uses: blue-build/github-action@v1.6
+        uses: blue-build/github-action@v1.10
         with:
           recipe: ${{ matrix.recipe }}
           cosign_private_key: ${{ secrets.SIGNING_SECRET }}
