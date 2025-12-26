@@ -16,7 +16,8 @@ modules:
 
   - type: rpm-ostree
     repos:
-      # Yazi File Manager (Bleeding Edge)
+      # Removed starship link
+      # Yazi File Manager (Bleeding Edge)O
       - https://copr.fedorainfracloud.org/coprs/sentry/yazi/repo/fedora-%OS_VERSION%/sentry-yazi-fedora-%OS_VERSION%.repo
 
     install:
