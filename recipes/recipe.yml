@@ -5,14 +5,14 @@ base-image: ghcr.io/ublue-os/cosmic
 image-version: 40 # Matches current Fedora Stable
 
 modules:
-  - type: files
-    files:
-      - source: configs
-        destination: /etc/skel/.config
-      - source: scripts
-        destination: /opt/lupineos/scripts
-      - source: assets
-        destination: /opt/lupineos/assets
+#  - type: files
+#    files:
+#      - source: configs
+#        destination: /etc/skel/.config
+#      - source: scripts
+#        destination: /opt/lupineos/scripts
+#      - source: assets
+#        destination: /opt/lupineos/assets
 
   - type: rpm-ostree
     repos:
