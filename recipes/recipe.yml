@@ -5,88 +5,53 @@ base-image: ghcr.io/ublue-os/cosmic
 image-version: 40 # Matches current Fedora Stable
 
 modules:
-#  - type: files
-#    files:
-#      - source: configs
-#        destination: /etc/skel/.config
-#      - source: scripts
-#        destination: /opt/lupineos/scripts
-#      - source: assets
-#        destination: /opt/lupineos/assets
-
-#  - type: rpm-ostree
-#    repos:
-#      # Removed starship link
-#      # Removed Yazi File Manager (Bleeding Edge)O
-
-#    install:
-      # --- Core Shell ---
-#      - git
-#      - zsh
-#      - util-linux-user # Required for chsh
-#      - starship
-#      - stow
-
-      # --- WolfPack CLI Tools ---
-#      - helix
-#      - neovim
-#      - eza          # ls replacement
-#      - ripgrep      # grep replacement
-#      - bat          # cat replacement
-#      - zoxide       # cd replacement
-#      - yazi         # file manager
-#      - fzf          # fuzzy finder
-#      - fd-find      # find replacement (fd)
-#      - tldr         # help replacement
-#      - fastfetch    # system info
-#      - distrobox
-      
-      # --- Container Compatibility ---
-#      - podman-docker # Allows typing 'docker' commands
-
+  # --- 1. System Packages (The "Direct Order" Fix) ---
   - type: containerfile
-      snippets:
-        - RUN rpm-ostree install \
-            git \
-            zsh \
-            util-linux-user \
-            starship \
-            stow \
-            helix \
-            neovim \
-            eza \
-            ripgrep \
-            bat \
-            zoxide \
-            yazi \
-            fzf \
-            fd-find \
-            tldr \
-            fastfetch \
-            distrobox \
-            podman-docker  - type: default-flatpaks
+    snippets:
+      - RUN rpm-ostree install \
+          git \
+          zsh \
+          util-linux-user \
+          starship \
+          stow \
+          helix \
+          neovim \
+          eza \
+          ripgrep \
+          bat \
+          zoxide \
+          yazi \
+          fzf \
+          fd-find \
+          tldr \
+          fastfetch \
+          distrobox \
+          podman-docker
+
+  # --- 2. Flatpaks ---
+  - type: default-flatpaks
     notify: true
     system:
-      # --- Gaming Stack ---
+      # Gaming
       - com.valvesoftware.Steam
       - com.heroicgameslauncher.hgl
       - net.lutris.Lutris
-      - net.davidotek.pupgui2      # ProtonUp-Qt (Manages Proton GE)
-
-      # --- Social & Media ---
-      - dev.vencord.Vesktop        # Discord with Screen Share
-
-      # --- System Utils ---
-      - com.github.tchx84.Flatseal # Permission manager
-      - io.github.flattool.Warehouse # Flatpak manager
+      - net.davidotek.pupgui2         # ProtonUp-Qt
+      # Social
+      - dev.vencord.Vesktop           # Discord
+      # System Utils
+      - com.github.tchx84.Flatseal    # Permission manager
+      - io.github.flattool.Warehouse  # Flatpak manager
       - io.missioncenter.MissionCenter # System Monitor
 
+  # --- 3. System Services ---
   - type: systemd
     system:
       enabled:
         - podman.socket
 
+  # --- 4. Scripts ---
   - type: script
     scripts:
       - post_install.sh
-      # Force cache clear update 2 (removed yazi repo)
+      # Force cache clear update 3
