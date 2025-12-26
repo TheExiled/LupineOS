@@ -17,8 +17,7 @@ modules:
   - type: rpm-ostree
     repos:
       # Removed starship link
-      # Yazi File Manager (Bleeding Edge)O
-      - https://copr.fedorainfracloud.org/coprs/sentry/yazi/repo/fedora-%OS_VERSION%/sentry-yazi-fedora-%OS_VERSION%.repo
+      # Removed Yazi File Manager (Bleeding Edge)O
 
     install:
       # --- Core Shell ---
@@ -70,3 +69,4 @@ modules:
   - type: script
     scripts:
       - post_install.sh
+      # Force cache clear update 2 (removed yazi repo)
