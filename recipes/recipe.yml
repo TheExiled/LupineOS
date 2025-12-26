@@ -2,7 +2,7 @@
 name: lupineos
 description: "The WolfPack - Custom Fedora Atomic Workstation"
 base-image: ghcr.io/ublue-os/cosmic
-image-version: 40 # Matches current Fedora Stable
+image-version: 41 # Matches current Fedora Stable
 
 modules:
   # --- 1. System Packages (The "Direct Order" Fix) ---
