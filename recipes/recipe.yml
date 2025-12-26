@@ -14,37 +14,57 @@ modules:
 #      - source: assets
 #        destination: /opt/lupineos/assets
 
-  - type: rpm-ostree
-    repos:
-      # Removed starship link
-      # Removed Yazi File Manager (Bleeding Edge)O
+#  - type: rpm-ostree
+#    repos:
+#      # Removed starship link
+#      # Removed Yazi File Manager (Bleeding Edge)O
 
-    install:
+#    install:
       # --- Core Shell ---
-      - git
-      - zsh
-      - util-linux-user # Required for chsh
-      - starship
-      - stow
+#      - git
+#      - zsh
+#      - util-linux-user # Required for chsh
+#      - starship
+#      - stow
 
       # --- WolfPack CLI Tools ---
-      - helix
-      - neovim
-      - eza          # ls replacement
-      - ripgrep      # grep replacement
-      - bat          # cat replacement
-      - zoxide       # cd replacement
-      - yazi         # file manager
-      - fzf          # fuzzy finder
-      - fd-find      # find replacement (fd)
-      - tldr         # help replacement
-      - fastfetch    # system info
-      - distrobox
+#      - helix
+#      - neovim
+#      - eza          # ls replacement
+#      - ripgrep      # grep replacement
+#      - bat          # cat replacement
+#      - zoxide       # cd replacement
+#      - yazi         # file manager
+#      - fzf          # fuzzy finder
+#      - fd-find      # find replacement (fd)
+#      - tldr         # help replacement
+#      - fastfetch    # system info
+#      - distrobox
       
       # --- Container Compatibility ---
-      - podman-docker # Allows typing 'docker' commands
+#      - podman-docker # Allows typing 'docker' commands
 
-  - type: default-flatpaks
+  - type: containerfile
+      snippets:
+        - RUN rpm-ostree install \
+            git \
+            zsh \
+            util-linux-user \
+            starship \
+            stow \
+            helix \
+            neovim \
+            eza \
+            ripgrep \
+            bat \
+            zoxide \
+            yazi \
+            fzf \
+            fd-find \
+            tldr \
+            fastfetch \
+            distrobox \
+            podman-docker  - type: default-flatpaks
     notify: true
     system:
       # --- Gaming Stack ---
