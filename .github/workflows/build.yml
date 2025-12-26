@@ -20,7 +20,7 @@ jobs:
       fail-fast: false
       matrix:
         recipe:
-          - config/recipe.yml
+          - recipe.yml
     steps:
       - name: Workaround for git dubious ownership
         run: git config --global --add safe.directory $GITHUB_WORKSPACE
