@@ -17,7 +17,7 @@ jobs:
       - name: Build ISO
         uses: blue-build/github-action@v1.8
         with:
-          recipe: config/recipe.yml
+          recipe: recipes/recipe.yml
           cosign_private_key: ${{ secrets.SIGNING_SECRET }}
           registry_token: ${{ github.token }}
           pr_event_number: ${{ github.event.number }}
