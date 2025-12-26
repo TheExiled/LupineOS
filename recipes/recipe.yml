@@ -16,8 +16,6 @@ modules:
 
   - type: rpm-ostree
     repos:
-      # Starship Prompt
-      - https://copr.fedorainfracloud.org/coprs/atim/starship/repo/fedora-%OS_VERSION%/atim-starship-fedora-%OS_VERSION%.repo
       # Yazi File Manager (Bleeding Edge)
       - https://copr.fedorainfracloud.org/coprs/sentry/yazi/repo/fedora-%OS_VERSION%/sentry-yazi-fedora-%OS_VERSION%.repo
 
