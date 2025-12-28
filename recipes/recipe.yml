@@ -5,31 +5,18 @@ base-image: ghcr.io/ublue-os/silverblue-main
 image-version: 41 # Fedora 41 (Stable)
 
 modules:
-  # --- 1. Core Tools (Via Raw Command to bypass Builder Bug) ---
+  # --- 1. Minimal Core Test ---
+  # Installing ONLY safe packages to prove the build works
   - type: containerfile
     snippets:
-      - RUN rpm-ostree install \
-          git \
-          zsh \
-          starship \
-          stow \
-          helix \
-          neovim \
-          eza \
-          ripgrep \
-          bat \
-          zoxide \
-          fzf \
-          fd-find \
-          fastfetch
+      - RUN rpm-ostree install zsh starship
 
-  # --- 2. Flatpaks (Your Apps) ---
+  # --- 2. Flatpaks ---
   - type: default-flatpaks
     notify: true
     system:
       - com.valvesoftware.Steam
       - dev.vencord.Vesktop
-      - io.missioncenter.MissionCenter
 
   # --- 3. System Services ---
   - type: systemd
@@ -41,4 +28,4 @@ modules:
   - type: script
     scripts:
       - post_install.sh
-      # Final Fix: Silverblue Base + Raw Containerfile
+      # Sanity Check: Minimal Build
