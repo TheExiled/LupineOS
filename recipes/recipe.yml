@@ -1,9 +1,66 @@
 # config/recipe.yml
 name: lupineos
 description: "The WolfPack - Custom Fedora Atomic Workstation"
-base-image: ghcr.io/ublue-os/silverblue-main
-image-version: 41 # Fedora 41 (Stable)
+base-image: ghcr.io/ublue-os/cosmic
+image-version: 43 # Targeted Fedora 43 (Stable in your timeline)
 
 modules:
-  # Intentionally Empty
-  # We are building the pure base image to bypass CI errors.
+  # --- 1. The Foundation (Files & Packages) ---
+  # We use 'containerfile' snippets here to bypass the BlueBuild module bugs.
+  # This restores your Configs, Scripts, and Tools in one robust step.
+  - type: containerfile
+    snippets:
+      # Step A: Restore your custom files (Replaces the broken 'files' module)
+      - COPY recipes/configs /etc/skel/.config
+      - COPY recipes/scripts /opt/lupineos/scripts
+      - COPY recipes/assets /opt/lupineos/assets
+
+      # Step B: Install ALL requested tools (Replaces the 'rpm-ostree' module)
+      # Note: Starship and Yazi are native in Fedora 43, no extra repos needed.
+      - RUN rpm-ostree install \
+          git \
+          zsh \
+          util-linux-user \
+          starship \
+          stow \
+          helix \
+          neovim \
+          eza \
+          ripgrep \
+          bat \
+          zoxide \
+          yazi \
+          fzf \
+          fd-find \
+          tldr \
+          fastfetch \
+          distrobox \
+          podman-docker
+
+  # --- 2. Flatpaks (Your Apps) ---
+  - type: default-flatpaks
+    notify: true
+    system:
+      # Gaming
+      - com.valvesoftware.Steam
+      - com.heroicgameslauncher.hgl
+      - net.lutris.Lutris
+      - net.davidotek.pupgui2         # ProtonUp-Qt
+      # Social
+      - dev.vencord.Vesktop           # Discord
+      # System Utils
+      - com.github.tchx84.Flatseal    # Permission manager
+      - io.github.flattool.Warehouse  # Flatpak manager
+      - io.missioncenter.MissionCenter # System Monitor
+
+  # --- 3. System Services ---
+  - type: systemd
+    system:
+      enabled:
+        - podman.socket
+
+  # --- 4. Scripts ---
+  - type: script
+    scripts:
+      - post_install.sh
+      # Final Production Build: Fedora 43 + Full Restore
