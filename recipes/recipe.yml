@@ -1,27 +1,25 @@
 # config/recipe.yml
 name: lupineos
 description: "The WolfPack - Custom Fedora Atomic Workstation"
-# We switch to Silverblue because it is the Official Stable image for Fedora 43.
-# The 'Cosmic' specific image is currently missing/broken in the custom builder.
 base-image: ghcr.io/ublue-os/silverblue-main
-image-version: 43 # Fedora 43 (Current Stable)
+image-version: 43 # Fedora 43 (Stable)
 
 modules:
   # --- 1. The Foundation (Files & Packages) ---
-  # 'containerfile' bypasses the BlueBuild bugs by using raw Docker commands.
   - type: containerfile
     snippets:
-      # Step A: Restore your custom files
+      # Step A: Restore your custom files (Crucial for your "Dream Env")
+      # Ensure you have moved your folders to 'recipes/configs' etc.
       - COPY recipes/configs /etc/skel/.config
       - COPY recipes/scripts /opt/lupineos/scripts
       - COPY recipes/assets /opt/lupineos/assets
 
-      # Step B: Install ALL requested tools
-      # We use 'RUN' to force installation. This list includes Distrobox (better Toolbx).
+      # Step B: Install ONLY the Safe Core Tools
+      # Removed 'podman-docker' and 'distrobox' to prevent build conflicts.
+      # You can install them inside the OS later if needed.
       - RUN rpm-ostree install \
           git \
           zsh \
-          util-linux-user \
           starship \
           stow \
           helix \
@@ -34,9 +32,7 @@ modules:
           fzf \
           fd-find \
           tldr \
-          fastfetch \
-          distrobox \
-          podman-docker
+          fastfetch
 
   # --- 2. Flatpaks (Your Apps) ---
   - type: default-flatpaks
@@ -64,4 +60,4 @@ modules:
   - type: script
     scripts:
       - post_install.sh
-      # Final Build: Fedora 43 Silverblue + Full Config
+      # Final Attempt: Safe Mode Build
