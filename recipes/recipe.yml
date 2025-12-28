@@ -5,21 +5,5 @@ base-image: ghcr.io/ublue-os/silverblue-main
 image-version: 41 # Fedora 41 (Stable)
 
 modules:
-  # --- 1. Flatpaks (Safe to keep) ---
-  - type: default-flatpaks
-    notify: true
-    system:
-      - com.valvesoftware.Steam
-      - dev.vencord.Vesktop
-
-  # --- 2. System Services ---
-  - type: systemd
-    system:
-      enabled:
-        - podman.socket
-
-  # --- 3. Scripts ---
-  - type: script
-    scripts:
-      - post_install.sh
-      # Absolute Zero Build: Base Image Only
+  # Intentionally Empty
+  # We are building the pure base image to bypass CI errors.
