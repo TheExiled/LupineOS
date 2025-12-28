@@ -1,0 +1,9 @@
+[Desktop Entry]
+Type=Application
+Name=LupineOS Setup
+Comment=Automated System Construction
+# We launch bash explicitly to run the script
+Exec=bash -c "/opt/lupineos/scripts/bootstrap.sh; bash"
+# This ensures it pops up in a visible window
+Terminal=true
+X-GNOME-Autostart-enabled=true

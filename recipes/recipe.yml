@@ -5,11 +5,21 @@ base-image: ghcr.io/ublue-os/silverblue-main
 image-version: 43 # Fedora 43 (Stable)
 
 modules:
-  # --- The Payload (Files ONLY) ---
-  # We strictly COPY files. We do not run installs. We do not enable services.
-  # This avoids 100% of the errors we have seen.
+  # --- The Payload ---
+  # 1. We COPY the configs (Including the 'autostart' trigger we just made)
+  #    This puts the trigger in /etc/skel/.config/autostart
+  #    When a new user is created, it gets copied to their home, triggering the script.
   - type: containerfile
     snippets:
       - COPY recipes/configs /etc/skel/.config
       - COPY recipes/scripts /opt/lupineos/scripts
       - COPY recipes/assets /opt/lupineos/assets
+      # Make sure the script is executable!
+      - RUN chmod +x /opt/lupineos/scripts/bootstrap.sh
+
+  # --- System Services ---
+  # Minimal service enablement (Safe to keep)
+  - type: systemd
+    system:
+      enabled:
+        - podman.socket
