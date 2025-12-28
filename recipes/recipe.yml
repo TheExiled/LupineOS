@@ -1,22 +1,23 @@
 # config/recipe.yml
 name: lupineos
 description: "The WolfPack - Custom Fedora Atomic Workstation"
-base-image: ghcr.io/ublue-os/cosmic
-image-version: 43 # Targeted Fedora 43 (Stable in your timeline)
+# We switch to Silverblue because it is the Official Stable image for Fedora 43.
+# The 'Cosmic' specific image is currently missing/broken in the custom builder.
+base-image: ghcr.io/ublue-os/silverblue-main
+image-version: 43 # Fedora 43 (Current Stable)
 
 modules:
   # --- 1. The Foundation (Files & Packages) ---
-  # We use 'containerfile' snippets here to bypass the BlueBuild module bugs.
-  # This restores your Configs, Scripts, and Tools in one robust step.
+  # 'containerfile' bypasses the BlueBuild bugs by using raw Docker commands.
   - type: containerfile
     snippets:
-      # Step A: Restore your custom files (Replaces the broken 'files' module)
+      # Step A: Restore your custom files
       - COPY recipes/configs /etc/skel/.config
       - COPY recipes/scripts /opt/lupineos/scripts
       - COPY recipes/assets /opt/lupineos/assets
 
-      # Step B: Install ALL requested tools (Replaces the 'rpm-ostree' module)
-      # Note: Starship and Yazi are native in Fedora 43, no extra repos needed.
+      # Step B: Install ALL requested tools
+      # We use 'RUN' to force installation. This list includes Distrobox (better Toolbx).
       - RUN rpm-ostree install \
           git \
           zsh \
@@ -45,13 +46,13 @@ modules:
       - com.valvesoftware.Steam
       - com.heroicgameslauncher.hgl
       - net.lutris.Lutris
-      - net.davidotek.pupgui2         # ProtonUp-Qt
+      - net.davidotek.pupgui2
       # Social
-      - dev.vencord.Vesktop           # Discord
+      - dev.vencord.Vesktop
       # System Utils
-      - com.github.tchx84.Flatseal    # Permission manager
-      - io.github.flattool.Warehouse  # Flatpak manager
-      - io.missioncenter.MissionCenter # System Monitor
+      - com.github.tchx84.Flatseal
+      - io.github.flattool.Warehouse
+      - io.missioncenter.MissionCenter
 
   # --- 3. System Services ---
   - type: systemd
@@ -63,4 +64,4 @@ modules:
   - type: script
     scripts:
       - post_install.sh
-      # Final Production Build: Fedora 43 + Full Restore
+      # Final Build: Fedora 43 Silverblue + Full Config
