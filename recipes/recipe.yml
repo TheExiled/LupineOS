@@ -5,48 +5,23 @@ base-image: ghcr.io/ublue-os/silverblue-main
 image-version: 43 # Fedora 43 (Stable)
 
 modules:
-  # --- 1. The Foundation (Files & Packages) ---
+  # --- 1. The Payload (Files ONLY) ---
+  # We COPY your custom configs so they are baked into the ISO.
+  # We do NOT run 'rpm-ostree install' because it is crashing the build.
   - type: containerfile
     snippets:
-      # Step A: Restore your custom files
       - COPY recipes/configs /etc/skel/.config
       - COPY recipes/scripts /opt/lupineos/scripts
       - COPY recipes/assets /opt/lupineos/assets
 
-      # Step B: Install ONLY "Tier 1" Safe Tools
-      # Removed: zoxide, ripgrep, fzf, fd-find (Install via Brew later)
-      # Kept: git, zsh, starship, stow, neovim (Standard packages)
-      - RUN rpm-ostree install \
-          git \
-          zsh \
-          starship \
-          stow \
-          neovim
-
-  # --- 2. Flatpaks (Your Apps) ---
-  - type: default-flatpaks
-    notify: true
-    system:
-      # Gaming
-      - com.valvesoftware.Steam
-      - com.heroicgameslauncher.hgl
-      - net.lutris.Lutris
-      - net.davidotek.pupgui2
-      # Social
-      - dev.vencord.Vesktop
-      # System Utils
-      - com.github.tchx84.Flatseal
-      - io.github.flattool.Warehouse
-      - io.missioncenter.MissionCenter
-
-  # --- 3. System Services ---
+  # --- 2. System Services ---
   - type: systemd
     system:
       enabled:
         - podman.socket
 
-  # --- 4. Scripts ---
+  # --- 3. Scripts ---
   - type: script
     scripts:
       - post_install.sh
-      # Final "Bare Metal" Build
+      # Final "Payload Only" Build
