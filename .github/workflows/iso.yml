@@ -1,35 +1,34 @@
-name: build-iso
+name: Generate ISO
 on:
-  workflow_dispatch: # This allows you to manually trigger the build
+  workflow_dispatch: # Lets you click the button manually
 
 jobs:
-  iso:
-    name: Build ISO
+  build-iso:
     runs-on: ubuntu-latest
     permissions:
       contents: read
       packages: write
       id-token: write
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
 
+    steps:
       - name: Build ISO
-        uses: blue-build/github-action@v1.8
+        uses: jasonn3/build-container-installer@v1.2.4
         with:
-          recipe: recipe.yml
-          cosign_private_key: ${{ secrets.SIGNING_SECRET }}
-          registry_token: ${{ github.token }}
-          pr_event_number: ${{ github.event.number }}
-          # This tells BlueBuild to output an ISO file
-          iso_name: lupineos-cosmic
+          # Points to the image you ALREADY built successfully
+          src: ghcr.io/theexiled/lupineos:latest
+          
+          # Name of the output file
+          iso_name: lupineos-installer
+          
+          # We need this to verify we own the package
+          auth_token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Upload ISO
         uses: actions/upload-artifact@v4
         with:
-          name: lupineos-cosmic
+          name: lupineos-iso
           path: |
-            **./*.iso
-            **./*.iso-CHECKSUM
+            ./*.iso
+            ./*-CHECKSUM
           if-no-files-found: error
-          retention-days: 5
+          retention-days: 1
