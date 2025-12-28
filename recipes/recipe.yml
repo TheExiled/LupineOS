@@ -9,30 +9,24 @@ modules:
   - type: containerfile
     snippets:
       # Step A: Restore your custom files (Crucial for your "Dream Env")
-      # Ensure you have moved your folders to 'recipes/configs' etc.
+      # This saves your configs/scripts into the image.
       - COPY recipes/configs /etc/skel/.config
       - COPY recipes/scripts /opt/lupineos/scripts
       - COPY recipes/assets /opt/lupineos/assets
 
-      # Step B: Install ONLY the Safe Core Tools
-      # Removed 'podman-docker' and 'distrobox' to prevent build conflicts.
-      # You can install them inside the OS later if needed.
+      # Step B: Install ONLY Safe Core Tools
+      # We removed yazi, eza, fastfetch, and bat to prevent "Package Not Found" errors.
+      # You will install these easily after booting.
       - RUN rpm-ostree install \
           git \
           zsh \
           starship \
           stow \
-          helix \
           neovim \
-          eza \
           ripgrep \
-          bat \
-          zoxide \
-          yazi \
           fzf \
           fd-find \
-          tldr \
-          fastfetch
+          zoxide
 
   # --- 2. Flatpaks (Your Apps) ---
   - type: default-flatpaks
@@ -60,4 +54,4 @@ modules:
   - type: script
     scripts:
       - post_install.sh
-      # Final Attempt: Safe Mode Build
+      # Final Attempt: Lifeboat Build
