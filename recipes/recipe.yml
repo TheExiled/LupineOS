@@ -5,23 +5,11 @@ base-image: ghcr.io/ublue-os/silverblue-main
 image-version: 43 # Fedora 43 (Stable)
 
 modules:
-  # --- 1. The Payload (Files ONLY) ---
-  # We COPY your custom configs so they are baked into the ISO.
-  # We do NOT run 'rpm-ostree install' because it is crashing the build.
+  # --- The Payload (Files ONLY) ---
+  # We strictly COPY files. We do not run installs. We do not enable services.
+  # This avoids 100% of the errors we have seen.
   - type: containerfile
     snippets:
       - COPY recipes/configs /etc/skel/.config
       - COPY recipes/scripts /opt/lupineos/scripts
       - COPY recipes/assets /opt/lupineos/assets
-
-  # --- 2. System Services ---
-  - type: systemd
-    system:
-      enabled:
-        - podman.socket
-
-  # --- 3. Scripts ---
-  - type: script
-    scripts:
-      - post_install.sh
-      # Final "Payload Only" Build
