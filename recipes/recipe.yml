@@ -5,21 +5,18 @@ base-image: ghcr.io/ublue-os/silverblue-main
 image-version: 43 # Fedora 43 (Stable)
 
 modules:
-  # --- The Payload ---
-  # 1. We COPY the configs (Including the 'autostart' trigger we just made)
-  #    This puts the trigger in /etc/skel/.config/autostart
-  #    When a new user is created, it gets copied to their home, triggering the script.
+  # --- The "Raw Mode" Build ---
+  # We are using ONLY 'containerfile' snippets.
+  # This bypasses ALL BlueBuild modules to avoid the "unbound variable" bug.
   - type: containerfile
     snippets:
+      # 1. Copy Payload (Your Configs, Assets, and the Autopilot Trigger)
       - COPY recipes/configs /etc/skel/.config
       - COPY recipes/scripts /opt/lupineos/scripts
       - COPY recipes/assets /opt/lupineos/assets
-      # Make sure the script is executable!
+
+      # 2. Set Permissions (Make the bootstrap script executable)
       - RUN chmod +x /opt/lupineos/scripts/bootstrap.sh
 
-  # --- System Services ---
-  # Minimal service enablement (Safe to keep)
-  - type: systemd
-    system:
-      enabled:
-        - podman.socket
+      # 3. Enable Services (Replaces the broken 'systemd' module)
+      - RUN systemctl enable podman.socket
