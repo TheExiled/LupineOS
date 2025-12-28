@@ -5,27 +5,21 @@ base-image: ghcr.io/ublue-os/silverblue-main
 image-version: 41 # Fedora 41 (Stable)
 
 modules:
-  # --- 1. Minimal Core Test ---
-  # Installing ONLY safe packages to prove the build works
-  - type: containerfile
-    snippets:
-      - RUN rpm-ostree install zsh starship
-
-  # --- 2. Flatpaks ---
+  # --- 1. Flatpaks (Safe to keep) ---
   - type: default-flatpaks
     notify: true
     system:
       - com.valvesoftware.Steam
       - dev.vencord.Vesktop
 
-  # --- 3. System Services ---
+  # --- 2. System Services ---
   - type: systemd
     system:
       enabled:
         - podman.socket
 
-  # --- 4. Scripts ---
+  # --- 3. Scripts ---
   - type: script
     scripts:
       - post_install.sh
-      # Sanity Check: Minimal Build
+      # Absolute Zero Build: Base Image Only
