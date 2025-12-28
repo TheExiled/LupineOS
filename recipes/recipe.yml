@@ -5,29 +5,23 @@ base-image: ghcr.io/ublue-os/silverblue-main
 image-version: 41 # Fedora 41 (Stable)
 
 modules:
-  # --- 1. Core Tools (Simplified) ---
-  # We use the native 'rpm-ostree' module which is safer than raw containerfile commands
-  - type: rpm-ostree
-    install:
-      # Shell & Core
-      - git
-      - zsh
-      - starship
-      - stow
-      # Editors
-      - helix
-      - neovim
-      # CLI Power Tools
-      - eza
-      - ripgrep
-      - bat
-      - zoxide
-      - fzf
-      - fd-find
-      - fastfetch
-      # - yazi  <-- Temporarily removed (often causes repo issues, we add back next)
-      # - distrobox <-- Built-in to Silverblue now
-      # - podman-docker <-- Built-in or conflicts
+  # --- 1. Core Tools (Via Raw Command to bypass Builder Bug) ---
+  - type: containerfile
+    snippets:
+      - RUN rpm-ostree install \
+          git \
+          zsh \
+          starship \
+          stow \
+          helix \
+          neovim \
+          eza \
+          ripgrep \
+          bat \
+          zoxide \
+          fzf \
+          fd-find \
+          fastfetch
 
   # --- 2. Flatpaks (Your Apps) ---
   - type: default-flatpaks
@@ -47,4 +41,4 @@ modules:
   - type: script
     scripts:
       - post_install.sh
-      # Force Reset: Sanity Check Build 1
+      # Final Fix: Silverblue Base + Raw Containerfile
