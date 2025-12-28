@@ -8,25 +8,20 @@ modules:
   # --- 1. The Foundation (Files & Packages) ---
   - type: containerfile
     snippets:
-      # Step A: Restore your custom files (Crucial for your "Dream Env")
-      # This saves your configs/scripts into the image.
+      # Step A: Restore your custom files
       - COPY recipes/configs /etc/skel/.config
       - COPY recipes/scripts /opt/lupineos/scripts
       - COPY recipes/assets /opt/lupineos/assets
 
-      # Step B: Install ONLY Safe Core Tools
-      # We removed yazi, eza, fastfetch, and bat to prevent "Package Not Found" errors.
-      # You will install these easily after booting.
+      # Step B: Install ONLY "Tier 1" Safe Tools
+      # Removed: zoxide, ripgrep, fzf, fd-find (Install via Brew later)
+      # Kept: git, zsh, starship, stow, neovim (Standard packages)
       - RUN rpm-ostree install \
           git \
           zsh \
           starship \
           stow \
-          neovim \
-          ripgrep \
-          fzf \
-          fd-find \
-          zoxide
+          neovim
 
   # --- 2. Flatpaks (Your Apps) ---
   - type: default-flatpaks
@@ -54,4 +49,4 @@ modules:
   - type: script
     scripts:
       - post_install.sh
-      # Final Attempt: Lifeboat Build
+      # Final "Bare Metal" Build
