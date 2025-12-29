@@ -1,0 +1,13 @@
+[Unit]
+Description=LupineOS First Boot Setup
+ConditionFirstBoot=yes
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+ExecStart=/opt/lupineos/scripts/lupineos-firstboot.sh
+RemainAfterExit=yes
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,66 @@
+# LupineOS Starship Config - Ashen Theme
+
+format = """
+[░▒▓](#a7a7a7)\
+[ 🐺 ](bg:#a7a7a7 fg:#121212)\
+[](bg:#949494 fg:#a7a7a7)\
+$directory\
+[](fg:#949494 bg:#323232)\
+$git_branch\
+$git_status\
+[](fg:#323232 bg:#1d1d1d)\
+$nodejs\
+$rust\
+$golang\
+$php\
+[](fg:#1d1d1d bg:#151515)\
+$time\
+[ ](fg:#151515)\
+\n$character"""
+
+[directory]
+style = "fg:#e5e5e5 bg:#949494"
+format = "[ $path ]($style)"
+truncation_length = 3
+truncation_symbol = "…/"
+
+[directory.substitutions]
+"Documents" = "󰈙 "
+"Downloads" = " "
+"Music" = " "
+"Pictures" = " "
+
+[git_branch]
+symbol = ""
+style = "bg:#323232"
+format = "[[ $symbol $branch ](fg:#C4693D bg:#323232)]($style)"
+
+[git_status]
+style = "bg:#323232"
+format = "[[($all_status$ahead_behind )](fg:#C4693D bg:#323232)]($style)"
+
+[nodejs]
+symbol = ""
+style = "bg:#1d1d1d"
+format = "[[ $symbol ($version) ](fg:#D87C4A bg:#1d1d1d)]($style)"
+
+[rust]
+symbol = ""
+style = "bg:#1d1d1d"
+format = "[[ $symbol ($version) ](fg:#D87C4A bg:#1d1d1d)]($style)"
+
+[golang]
+symbol = ""
+style = "bg:#1d1d1d"
+format = "[[ $symbol ($version) ](fg:#D87C4A bg:#1d1d1d)]($style)"
+
+[php]
+symbol = ""
+style = "bg:#1d1d1d"
+format = "[[ $symbol ($version) ](fg:#D87C4A bg:#1d1d1d)]($style)"
+
+[time]
+disabled = false
+time_format = "%R" # Hour:Minute Format
+style = "bg:#151515"
+format = "[[  $time ](fg:#737373 bg:#151515)]($style)"
