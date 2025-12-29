@@ -2,10 +2,11 @@
 name: lupineos
 description: "The WolfPack - Custom Fedora Atomic Workstation"
 
-# --- BASE IMAGE: COSMIC ATOMIC ---
-# we switch the base to the official Cosmic image so we don't need to rebase at runtime.
-base-image: quay.io/fedora-ostree-desktops/cosmic-atomic
-image-version: 43
+# --- BASE IMAGE: COSMIC ATOMIC (uBlue) ---
+# We switch to Universal Blue because it has better repo support for layering.
+# The official fedora-ostree-desktops image was missing standard repos.
+base-image: ghcr.io/ublue-os/cosmic-atomic-main
+image-version: 41  # uBlue naming convention often implies version in tag or uses stable base
 
 modules:
   # --- The "Raw Mode" Build ---
