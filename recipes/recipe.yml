@@ -13,14 +13,10 @@ modules:
     snippets:
       # 1. Enable Community Repos (COPR)
       # We download the repos and explicitly DISABLE gpgcheck to avoid build failures.
-      - RUN curl -L -o /etc/yum.repos.d/atim-starship.repo https://copr.fedorainfracloud.org/coprs/atim/starship/repo/fedora-43/atim-starship-fedora-43.repo \
-          && sed -i 's/gpgcheck=1/gpgcheck=0/g' /etc/yum.repos.d/atim-starship.repo
-          
-      - RUN curl -L -o /etc/yum.repos.d/alternateved-eza.repo https://copr.fedorainfracloud.org/coprs/alternateved/eza/repo/fedora-43/alternateved-eza-fedora-43.repo \
-          && sed -i 's/gpgcheck=1/gpgcheck=0/g' /etc/yum.repos.d/alternateved-eza.repo
-          
-      - RUN curl -L -o /etc/yum.repos.d/varlad-yazi.repo https://copr.fedorainfracloud.org/coprs/varlad/yazi/repo/fedora-43/varlad-yazi-fedora-43.repo \
-          && sed -i 's/gpgcheck=1/gpgcheck=0/g' /etc/yum.repos.d/varlad-yazi.repo
+      # flattened to single lines to prevent YAML/Shell escaping issues (double backslash error)
+      - RUN curl -L -o /etc/yum.repos.d/atim-starship.repo https://copr.fedorainfracloud.org/coprs/atim/starship/repo/fedora-43/atim-starship-fedora-43.repo && sed -i 's/gpgcheck=1/gpgcheck=0/g' /etc/yum.repos.d/atim-starship.repo
+      - RUN curl -L -o /etc/yum.repos.d/alternateved-eza.repo https://copr.fedorainfracloud.org/coprs/alternateved/eza/repo/fedora-43/alternateved-eza-fedora-43.repo && sed -i 's/gpgcheck=1/gpgcheck=0/g' /etc/yum.repos.d/alternateved-eza.repo
+      - RUN curl -L -o /etc/yum.repos.d/varlad-yazi.repo https://copr.fedorainfracloud.org/coprs/varlad/yazi/repo/fedora-43/varlad-yazi-fedora-43.repo && sed -i 's/gpgcheck=1/gpgcheck=0/g' /etc/yum.repos.d/varlad-yazi.repo
 
       # 2. Install Fedora Core Tools (Stable)
       - RUN rpm-ostree install -y \
