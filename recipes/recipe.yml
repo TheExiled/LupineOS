@@ -11,44 +11,46 @@ modules:
   # --- The "Raw Mode" Build ---
   - type: containerfile
     snippets:
-      # Note: 'yazi' and 'eza' are removed (require COPR).
-      
       # 1. Enable Community Repos (COPR)
-      - RUN curl -L -o /etc/yum.repos.d/atim-starship.repo https://copr.fedorainfracloud.org/coprs/atim/starship/repo/fedora-43/atim-starship-fedora-43.repo
-      - RUN curl -L -o /etc/yum.repos.d/alternateved-eza.repo https://copr.fedorainfracloud.org/coprs/alternateved/eza/repo/fedora-43/alternateved-eza-fedora-43.repo
-      - RUN curl -L -o /etc/yum.repos.d/varlad-yazi.repo https://copr.fedorainfracloud.org/coprs/varlad/yazi/repo/fedora-43/varlad-yazi-fedora-43.repo
+      # We download the repos and explicitly DISABLE gpgcheck to avoid build failures.
+      - RUN curl -L -o /etc/yum.repos.d/atim-starship.repo https://copr.fedorainfracloud.org/coprs/atim/starship/repo/fedora-43/atim-starship-fedora-43.repo \
+          && sed -i 's/gpgcheck=1/gpgcheck=0/g' /etc/yum.repos.d/atim-starship.repo
+          
+      - RUN curl -L -o /etc/yum.repos.d/alternateved-eza.repo https://copr.fedorainfracloud.org/coprs/alternateved/eza/repo/fedora-43/alternateved-eza-fedora-43.repo \
+          && sed -i 's/gpgcheck=1/gpgcheck=0/g' /etc/yum.repos.d/alternateved-eza.repo
+          
+      - RUN curl -L -o /etc/yum.repos.d/varlad-yazi.repo https://copr.fedorainfracloud.org/coprs/varlad/yazi/repo/fedora-43/varlad-yazi-fedora-43.repo \
+          && sed -i 's/gpgcheck=1/gpgcheck=0/g' /etc/yum.repos.d/varlad-yazi.repo
 
-      # 2. Install All Tools (The Pack)
+      # 2. Install Fedora Core Tools (Stable)
       - RUN rpm-ostree install -y \
-          git zsh util-linux-user starship stow \
-          helix neovim eza ripgrep bat zoxide \
-          yazi fzf fd-find tealdeer fastfetch \
+          git zsh util-linux-user stow \
+          helix neovim ripgrep bat zoxide \
+          fzf fd-find tealdeer fastfetch \
           distrobox taskwarrior
 
-      # 1. Copy Payload (Your Configs, Assets, and the Autopilot Trigger)
+      # 3. Install Bleeding Edge Tools (COPR)
+      - RUN rpm-ostree install -y \
+          starship \
+          eza \
+          yazi
+
+      # 4. Copy Configs & Assets
       - COPY recipes/configs /etc/skel/.config
-      - COPY recipes/scripts /opt/lupineos/scripts
       - COPY recipes/assets /opt/lupineos/assets
       
-      # Copy Wallpapers
+      # 5. Copy Branding & Systemd (From other agent's work)
+      # Wallpapers & Plymouth
       - COPY recipes/assets/wallpapers /usr/share/backgrounds/lupineos
-
-      # Copy Plymouth Theme
       - COPY recipes/assets/plymouth/lupineos /usr/share/plymouth/themes/lupineos
       - RUN plymouth-set-default-theme -R lupineos
+      
+      # Welcome App (Example placeholder)
+      # - COPY recipes/bin/lupineos-welcome /usr/bin/lupineos-welcome
 
-      # Copy Welcome App (Assuming it's built and placed in recipes/bin by a pre-script or we copy from sandbox if local build works)
-      # For now, let's assume we copy the binary from a local 'recipes/bin' folder we will create
-      - COPY recipes/bin/lupineos-welcome /usr/bin/lupineos-welcome
-
-      # Copy Systemd Units
+      # Systemd Units
       - COPY recipes/assets/systemd/lupineos-firstboot.service /usr/lib/systemd/system/lupineos-firstboot.service
 
-      # 2. Set Permissions (Make the bootstrap script executable)
-      - RUN chmod +x /opt/lupineos/scripts/bootstrap.sh
-      - RUN chmod +x /opt/lupineos/scripts/lupineos-firstboot.sh
-      - RUN chmod +x /usr/bin/lupineos-welcome
-
-      # 3. Enable Services (Replaces the broken 'systemd' module)
+      # 6. Enable Services
       - RUN systemctl enable podman.socket
       - RUN systemctl enable lupineos-firstboot.service
