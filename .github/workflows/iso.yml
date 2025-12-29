@@ -19,7 +19,7 @@ jobs:
           auth_token: ${{ secrets.GITHUB_TOKEN }}
           # --- THE FIX IS HERE ---
           # We force it to use Fedora 41 (Stable) instead of the broken default (39)
-          fedora_version: 41
+          fedora_version: 43
 
       - name: Upload ISO
         uses: actions/upload-artifact@v4
