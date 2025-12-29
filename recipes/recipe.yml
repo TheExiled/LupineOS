@@ -13,21 +13,13 @@ modules:
     snippets:
       # Note: 'yazi' and 'eza' are removed (require COPR).
       
-      # Layer 1: Core Tools (Known Good)
-      - RUN rpm-ostree install -y \
-          git zsh util-linux-user starship stow \
-          helix neovim distrobox
-
-      # Layer 2: Extras (Likely Culprits)
-      # 'tldr' -> 'tealdeer', 'task' -> 'taskwarrior', 'fd' -> 'fd-find'
-      - RUN rpm-ostree install -y \
-          ripgrep bat zoxide \
-          fzf fd-find tealdeer fastfetch \
-          taskwarrior
-
-      # 2. Copy Configs (The Senses)
+      # 1. Copy Payload (Your Configs, Assets, and the Autopilot Trigger)
       - COPY recipes/configs /etc/skel/.config
+      - COPY recipes/scripts /opt/lupineos/scripts
       - COPY recipes/assets /opt/lupineos/assets
 
-      # 3. Enable System Services
+      # 2. Set Permissions (Make the bootstrap script executable)
+      - RUN chmod +x /opt/lupineos/scripts/bootstrap.sh
+
+      # 3. Enable Services (Replaces the broken 'systemd' module)
       - RUN systemctl enable podman.socket

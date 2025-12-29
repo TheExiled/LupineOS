@@ -16,13 +16,18 @@
 
 ______________________________________________________________________
 
-🚀 Installation (Native Image)
+🚀 Installation (The "Autopilot" Method)
 
-1. **Download ISO:** Grab the latest `lupineos-installer.iso` from GitHub Releases.
-2. **Install:**
-   - Boot the USB.
-   - Install Fedora.
-   - **That's it.** You will wake up in a fully configured Cosmic desktop. No post-install scripts required.
+1. **Download ISO:** Grab the latest `lupineos-installer.iso` from the **Releases** or **Actions** tab.
+2. **Flash:** Burn it to a USB stick using Fedora Media Writer or BalenaEtcher.
+3. **Install:** Boot the USB and install Fedora normally.
+   - *Note: The installer may look like standard Fedora 41, but it will pull your custom OS.*
+4. **First Boot:**
+   - Log in.
+   - **Do NOT touch anything.**
+   - A terminal window ("LupineOS Setup") will open automatically.
+   - It will reboot your system twice to apply the Cosmic desktop and install all tools.
+   - When it says "LUPINEOS COMPLETE", you are ready to hunt.
 
 ______________________________________________________________________
 

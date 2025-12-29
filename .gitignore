@@ -8,3 +8,4 @@
 *.zip
 aws/
 cosign.key
+sandbox/
