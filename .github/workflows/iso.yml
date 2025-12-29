@@ -1,6 +1,6 @@
 name: Generate ISO
 on:
-  workflow_dispatch: # Lets you click the button manually
+  workflow_dispatch:
 
 jobs:
   build-iso:
@@ -14,14 +14,12 @@ jobs:
       - name: Build ISO
         uses: jasonn3/build-container-installer@v1.2.4
         with:
-          # Points to the image you ALREADY built successfully
           src: ghcr.io/theexiled/lupineos:latest
-          
-          # Name of the output file
           iso_name: lupineos-installer
-          
-          # We need this to verify we own the package
           auth_token: ${{ secrets.GITHUB_TOKEN }}
+          # --- THE FIX IS HERE ---
+          # We force it to use Fedora 41 (Stable) instead of the broken default (39)
+          fedora_version: 41
 
       - name: Upload ISO
         uses: actions/upload-artifact@v4
