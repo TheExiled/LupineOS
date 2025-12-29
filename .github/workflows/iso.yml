@@ -22,7 +22,7 @@ jobs:
           image_tag: latest
           
           # 2. Set the Version (The input is 'version', not 'fedora_version')
-          version: 42
+          version: 41
           
           # 3. Set the Variant (Use silverblue as the safe base)
           variant: silverblue
