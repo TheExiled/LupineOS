@@ -12,12 +12,13 @@ modules:
   - type: containerfile
     snippets:
       # We override the base tree with our custom package set.
-      # Note: 'yazi' is removed (requires COPR). 'tldr' is provided by 'tealdeer'.
+      # Note: 'yazi' and 'eza' are removed (require COPR).
+      # 'tldr' -> 'tealdeer', 'task' -> 'taskwarrior', 'fd' -> 'fd-find'.
       - RUN rpm-ostree install -y \
           git zsh util-linux-user starship stow \
-          helix neovim eza ripgrep bat zoxide \
+          helix neovim ripgrep bat zoxide \
           fzf fd-find tealdeer fastfetch \
-          distrobox task
+          distrobox taskwarrior
 
       # 2. Copy Configs (The Senses)
       - COPY recipes/configs /etc/skel/.config
