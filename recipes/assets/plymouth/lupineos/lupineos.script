@@ -1,0 +1,30 @@
+// LupineOS Plymouth Script
+
+// Load the logo
+logo_image = Image("logo.png");
+screen_width = Window.GetWidth();
+screen_height = Window.GetHeight();
+
+// Center the logo
+logo_x = (screen_width / 2) - (logo_image.GetWidth() / 2);
+logo_y = (screen_height / 2) - (logo_image.GetHeight() / 2);
+logo_sprite = Sprite(logo_image);
+logo_sprite.SetX(logo_x);
+logo_sprite.SetY(logo_y);
+logo_sprite.SetOpacity(1);
+
+// Status Message (optional)
+fun message_callback (text) {
+  // simple status text handling if needed
+}
+
+Plymouth.SetMessageFunction(message_callback);
+
+// Animation Loop (Pulse expample)
+fun refresh_callback () {
+    time = Plymouth.GetSeconds();
+    opacity = (Math.Sin(time * 3) + 1) / 2 * 0.5 + 0.5; // Pulse between 0.5 and 1.0
+    logo_sprite.SetOpacity(opacity);
+}
+
+Plymouth.SetRefreshFunction(refresh_callback);

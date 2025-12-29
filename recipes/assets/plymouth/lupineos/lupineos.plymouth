@@ -1,0 +1,8 @@
+[Plymouth Theme]
+Name=LupineOS
+Description=A theme for LupineOS
+ModuleName=script
+
+[script]
+ImageDir=/usr/share/plymouth/themes/lupineos
+ScriptFile=/usr/share/plymouth/themes/lupineos/lupineos.script

@@ -13,13 +13,21 @@ modules:
     snippets:
       # Note: 'yazi' and 'eza' are removed (require COPR).
       
-      # 1. Copy Payload (Your Configs, Assets, and the Autopilot Trigger)
+      # 1. Enable Community Repos (COPR)
+      - RUN curl -L -o /etc/yum.repos.d/atim-starship.repo https://copr.fedorainfracloud.org/coprs/atim/starship/repo/fedora-43/atim-starship-fedora-43.repo
+      - RUN curl -L -o /etc/yum.repos.d/alternateved-eza.repo https://copr.fedorainfracloud.org/coprs/alternateved/eza/repo/fedora-43/alternateved-eza-fedora-43.repo
+      - RUN curl -L -o /etc/yum.repos.d/varlad-yazi.repo https://copr.fedorainfracloud.org/coprs/varlad/yazi/repo/fedora-43/varlad-yazi-fedora-43.repo
+
+      # 2. Install All Tools (The Pack)
+      - RUN rpm-ostree install -y \
+          git zsh util-linux-user starship stow \
+          helix neovim eza ripgrep bat zoxide \
+          yazi fzf fd-find tealdeer fastfetch \
+          distrobox taskwarrior
+
+      # 3. Copy Configs (The Senses)
       - COPY recipes/configs /etc/skel/.config
-      - COPY recipes/scripts /opt/lupineos/scripts
       - COPY recipes/assets /opt/lupineos/assets
 
-      # 2. Set Permissions (Make the bootstrap script executable)
-      - RUN chmod +x /opt/lupineos/scripts/bootstrap.sh
-
-      # 3. Enable Services (Replaces the broken 'systemd' module)
+      # 4. Enable Services
       - RUN systemctl enable podman.socket
