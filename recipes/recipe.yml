@@ -1,22 +1,27 @@
 # config/recipe.yml
 name: lupineos
 description: "The WolfPack - Custom Fedora Atomic Workstation"
-base-image: ghcr.io/ublue-os/silverblue-main
-image-version: 43 # Fedora 43 (Stable)
+
+# --- BASE IMAGE: COSMIC ATOMIC ---
+# we switch the base to the official Cosmic image so we don't need to rebase at runtime.
+base-image: quay.io/fedora-ostree-desktops/cosmic-atomic
+image-version: 43
 
 modules:
   # --- The "Raw Mode" Build ---
-  # We are using ONLY 'containerfile' snippets.
-  # This bypasses ALL BlueBuild modules to avoid the "unbound variable" bug.
   - type: containerfile
     snippets:
-      # 1. Copy Payload (Your Configs, Assets, and the Autopilot Trigger)
+      # 1. Install Core Tools (The Pack)
+      # We override the base tree with our custom package set.
+      - RUN rpm-ostree install -y \
+          git zsh util-linux-user starship stow \
+          helix neovim eza ripgrep bat zoxide \
+          yazi fzf fd-find tldr fastfetch \
+          distrobox task
+
+      # 2. Copy Configs (The Senses)
       - COPY recipes/configs /etc/skel/.config
-      - COPY recipes/scripts /opt/lupineos/scripts
       - COPY recipes/assets /opt/lupineos/assets
 
-      # 2. Set Permissions (Make the bootstrap script executable)
-      - RUN chmod +x /opt/lupineos/scripts/bootstrap.sh
-
-      # 3. Enable Services (Replaces the broken 'systemd' module)
+      # 3. Enable System Services
       - RUN systemctl enable podman.socket

@@ -30,6 +30,12 @@ ______________________________________________________________________
 
 *Note: The legacy bootstrap script is available on the `legacy-bootstrap` branch.*
 
+______________________________________________________________________
+
+## 🛠 Manual Installation (Legacy)
+
+*Note: The legacy bootstrap script is available on the `legacy-bootstrap` branch.*
+
 If you are already on Fedora Atomic and just want the dotfiles:
 
 1. **Clone Repo:** `git clone https://github.com/TheExiled/LupineOS.git ~/LupineOS`
