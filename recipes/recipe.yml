@@ -6,7 +6,7 @@ description: "The WolfPack - Custom Fedora Atomic Workstation"
 # We switch to Universal Blue because it has better repo support for layering.
 # The official fedora-ostree-desktops image was missing standard repos.
 base-image: ghcr.io/ublue-os/cosmic-atomic-main
-image-version: 41  # uBlue naming convention often implies version in tag or uses stable base
+image-version: latest  # '41' tag does not exist for this image, usage 'latest'
 
 modules:
   # --- The "Raw Mode" Build ---
