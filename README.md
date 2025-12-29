@@ -16,21 +16,28 @@
 
 ______________________________________________________________________
 
-## 🚀 Installation
+🚀 Installation (The "Autopilot" Method)
 
-1. **Install Host:** Fedora Atomic (Silverblue/Kinoite) with COSMIC Desktop.
-1. **Clone Repo:**
-   ```bash
-   git clone https://github.com/TheExiled/LupineOS.git ~/LupineOS
-   ```
-1. **Run Installer:**
-   ```bash
-   cd ~/LupineOS
-   chmod +x install.sh
-   ./install.sh
-   ```
+1. **Download ISO:** Grab the latest `lupineos-installer.iso` from the **Releases** or **Actions** tab.
+2. **Flash:** Burn it to a USB stick using Fedora Media Writer or BalenaEtcher.
+3. **Install:** Boot the USB and install Fedora normally.
+   - *Note: The installer may look like standard Fedora 41, but it will pull your custom OS.*
+4. **First Boot:**
+   - Log in.
+   - **Do NOT touch anything.**
+   - A terminal window ("LupineOS Setup") will open automatically.
+   - It will reboot your system twice to apply the Cosmic desktop and install all tools.
+   - When it says "LUPINEOS COMPLETE", you are ready to hunt.
 
 ______________________________________________________________________
+
+## 🛠 Manual Installation (Legacy)
+
+If you are already on Fedora Atomic and just want the dotfiles:
+
+1. **Clone Repo:** `git clone https://github.com/TheExiled/LupineOS.git ~/LupineOS`
+2. **Run Script:** `cd ~/LupineOS && ./install.sh`
+
 
 ## 1. Core Philosophy
 
