@@ -14,12 +14,21 @@ jobs:
       - name: Build ISO
         uses: jasonn3/build-container-installer@v1.2.4
         with:
-          src: ghcr.io/theexiled/lupineos:latest
+          # --- CORRECTED VARIABLES ---
+          
+          # 1. Point to your image (Split into parts)
+          image_repo: ghcr.io/theexiled
+          image_name: lupineos
+          image_tag: latest
+          
+          # 2. Set the Version (The input is 'version', not 'fedora_version')
+          version: 43
+          
+          # 3. Set the Variant (Use silverblue as the safe base)
+          variant: silverblue
+          
+          # 4. Name the output file
           iso_name: lupineos-installer
-          auth_token: ${{ secrets.GITHUB_TOKEN }}
-          # --- THE FIX IS HERE ---
-          # We force it to use Fedora 41 (Stable) instead of the broken default (39)
-          fedora_version: 43
 
       - name: Upload ISO
         uses: actions/upload-artifact@v4
