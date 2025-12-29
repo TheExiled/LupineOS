@@ -11,14 +11,19 @@ modules:
   # --- The "Raw Mode" Build ---
   - type: containerfile
     snippets:
-      # We override the base tree with our custom package set.
       # Note: 'yazi' and 'eza' are removed (require COPR).
-      # 'tldr' -> 'tealdeer', 'task' -> 'taskwarrior', 'fd' -> 'fd-find'.
+      
+      # Layer 1: Core Tools (Known Good)
       - RUN rpm-ostree install -y \
           git zsh util-linux-user starship stow \
-          helix neovim ripgrep bat zoxide \
+          helix neovim distrobox
+
+      # Layer 2: Extras (Likely Culprits)
+      # 'tldr' -> 'tealdeer', 'task' -> 'taskwarrior', 'fd' -> 'fd-find'
+      - RUN rpm-ostree install -y \
+          ripgrep bat zoxide \
           fzf fd-find tealdeer fastfetch \
-          distrobox taskwarrior
+          taskwarrior
 
       # 2. Copy Configs (The Senses)
       - COPY recipes/configs /etc/skel/.config
