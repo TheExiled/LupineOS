@@ -11,12 +11,12 @@ modules:
   # --- The "Raw Mode" Build ---
   - type: containerfile
     snippets:
-      # 1. Install Core Tools (The Pack)
       # We override the base tree with our custom package set.
+      # Note: 'yazi' is removed (requires COPR). 'tldr' is provided by 'tealdeer'.
       - RUN rpm-ostree install -y \
           git zsh util-linux-user starship stow \
           helix neovim eza ripgrep bat zoxide \
-          yazi fzf fd-find tldr fastfetch \
+          fzf fd-find tealdeer fastfetch \
           distrobox task
 
       # 2. Copy Configs (The Senses)
