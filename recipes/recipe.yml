@@ -10,6 +10,7 @@ image-version: 43
 modules:
   # --- The "Raw Mode" Build ---
   - type: containerfile
+    snippets:
       # 1. Copy Payload
       - COPY recipes/configs /etc/skel/.config
       - COPY recipes/assets /opt/lupineos/assets
