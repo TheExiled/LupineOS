@@ -6,12 +6,12 @@ GITHUB_USER="theexiled" # Must be lowercase for GHCR
 IMAGE_NAME="lupineos"
 TAG="latest"
 FEDORA_VERSION="41"
-ISO_NAME="lupineos-${FEDORA_VERSION}"
+ISO_FILENAME="lupineos-${FEDORA_VERSION}.iso"
 
 echo "----------------------------------------------------------------"
 echo "Starting ISO Generation for: ghcr.io/${GITHUB_USER}/${IMAGE_NAME}:${TAG}"
 echo "Target Fedora Version: $FEDORA_VERSION"
-echo "Output ISO: $(pwd)/$ISO_NAME.iso"
+echo "Output ISO: $(pwd)/$ISO_FILENAME"
 echo "----------------------------------------------------------------"
 
 # Check if Podman is installed
@@ -25,13 +25,13 @@ fi
 echo "Pulling builder and generating ISO... (This may take a few minutes)"
 
 sudo podman run --rm --privileged --volume .:/output \
-  -e INPUT_IMAGE_REPO="ghcr.io/${GITHUB_USER}" \
-  -e INPUT_IMAGE_NAME="${IMAGE_NAME}" \
-  -e INPUT_IMAGE_TAG="${TAG}" \
-  -e INPUT_VERSION="${FEDORA_VERSION}" \
-  -e INPUT_VARIANT="silverblue" \
-  -e INPUT_ISO_NAME="${ISO_NAME}" \
-  ghcr.io/jasonn3/build-container-installer:latest
+  ghcr.io/jasonn3/build-container-installer:latest \
+  --image-repo "ghcr.io/${GITHUB_USER}" \
+  --image-name "${IMAGE_NAME}" \
+  --image-tag "${TAG}" \
+  --version "${FEDORA_VERSION}" \
+  --variant "silverblue" \
+  --iso-name "${ISO_FILENAME}"
 
 # Final Check
 if [ -f "./$ISO_FILENAME" ]; then
@@ -39,6 +39,18 @@ if [ -f "./$ISO_FILENAME" ]; then
     echo "SUCCESS! ISO generated successfully."
     echo "You can now burn this file to a USB stick:"
     echo "  $ISO_FILENAME"
+    
+    # ---------------------------------------------------------
+    # AUTOMATION: Update Website Assets
+    # ---------------------------------------------------------
+    echo "Generating Checksum for Website..."
+    sha256sum "$ISO_FILENAME" > ./docs/checksum.txt
+    
+    # Optional: If you want to compress it for GitHub Release
+    echo "Compressing for Release (Background)..."
+    xz -z -k -T0 "$ISO_FILENAME" & 
+    
+    echo "Website 'docs/checksum.txt' updated."
     echo "----------------------------------------------------------------"
 else
     echo "----------------------------------------------------------------"
