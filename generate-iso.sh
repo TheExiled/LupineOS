@@ -26,12 +26,13 @@ echo "Pulling builder and generating ISO... (This may take a few minutes)"
 
 sudo podman run --rm --privileged --volume .:/output \
   ghcr.io/jasonn3/build-container-installer:latest \
-  --image-repo "ghcr.io/${GITHUB_USER}" \
-  --image-name "${IMAGE_NAME}" \
-  --image-tag "${TAG}" \
-  --version "${FEDORA_VERSION}" \
-  --variant "silverblue" \
-  --iso-name "${ISO_FILENAME}"
+  files-iso \
+  image_repo="ghcr.io/${GITHUB_USER}" \
+  image_name="${IMAGE_NAME}" \
+  image_tag="${TAG}" \
+  version="${FEDORA_VERSION}" \
+  variant="silverblue" \
+  iso_name="${ISO_FILENAME}"
 
 # Final Check
 if [ -f "./$ISO_FILENAME" ]; then
