@@ -10,6 +10,7 @@ updates:
           - "*"
 
   - package-ecosystem: "cargo"
+    # Path to the Rust project (Source consolidated in main repo)
     directory: "/sandbox/lupineos-welcome"
     schedule:
       interval: "weekly"
