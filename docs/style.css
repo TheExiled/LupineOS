@@ -35,11 +35,14 @@ body {
     position: fixed;
     top: 0;
     width: 100%;
-    padding: 1rem 0;
-    background: var(--glass-bg);
-    backdrop-filter: blur(12px);
-    border-bottom: 1px solid var(--glass-border);
+    padding: 1.2rem 0;
+    background: rgba(15, 17, 21, 0.6);
+    /* More transparent for blur */
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
     z-index: 100;
+    transition: background 0.3s;
 }
 
 .nav-container {
@@ -48,27 +51,36 @@ body {
     align-items: center;
 }
 
-.logo {
-    font-weight: 800;
-    font-size: 1.5rem;
-    letter-spacing: -0.02em;
+/* Logo */
+.logo-link {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    opacity: 0.9;
+    transition: opacity 0.2s;
 }
 
-.text-orange {
-    color: var(--primary-orange);
+.logo-link:hover {
+    opacity: 1;
 }
 
-.text-gradient {
-    background: linear-gradient(135deg, #ff966c 0%, #ff5e00 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
+.logo-img {
+    height: 36px;
+    width: auto;
+    display: block;
+}
+
+nav {
+    display: flex;
+    gap: 2.5rem;
+    align-items: center;
 }
 
 nav a {
     color: var(--text-muted);
     text-decoration: none;
-    margin-left: 2rem;
     font-weight: 500;
+    font-size: 0.95rem;
     transition: color 0.2s;
 }
 
@@ -78,25 +90,38 @@ nav a:hover {
 
 nav a.nav-cta {
     color: var(--primary-orange);
-    border: 1px solid var(--primary-orange);
-    padding: 0.5rem 1.2rem;
-    border-radius: 6px;
+    border: 1px solid rgba(255, 150, 108, 0.3);
+    padding: 0.6rem 1.4rem;
+    border-radius: 50px;
+    /* Pill shape is more modern */
+    font-weight: 600;
+    margin-left: 0;
 }
 
 nav a.nav-cta:hover {
     background: var(--primary-orange);
-    color: white;
+    color: #0f1115;
+    border-color: var(--primary-orange);
 }
 
 /* Hero */
 .hero {
-    padding-top: 140px;
-    padding-bottom: 80px;
-    min-height: 90vh;
+    padding-top: 180px;
+    /* More top space */
+    padding-bottom: 120px;
+    min-height: 100vh;
+    /* Full viewport height */
     display: flex;
     align-items: center;
     position: relative;
     overflow: hidden;
+
+    /* Professional Radial Overlay */
+    background: radial-gradient(circle at 50% 40%, rgba(15, 17, 21, 0.4) 0%, rgba(15, 17, 21, 1) 90%),
+        url('assets/bg-main.png');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
 }
 
 .hero-container {
