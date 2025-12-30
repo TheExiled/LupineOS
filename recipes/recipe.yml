@@ -11,15 +11,13 @@ modules:
   # --- The "Raw Mode" Build ---
   - type: containerfile
       # 1. FORCE ENABLE STANDARD REPOS (The "Core" Fix)
-      # The base image defaults to 'updates-archive' only. We force enable the main repos.
-      - RUN sed -i 's/enabled=0/enabled=1/g' /etc/yum.repos.d/fedora.repo && \
-            sed -i 's/enabled=0/enabled=1/g' /etc/yum.repos.d/fedora-updates.repo
+      # 1. FORCE ENABLE STANDARD REPOS (The "Core" Fix)
+      # Flattened to single line to prevent YAML errors
+      - RUN sed -i 's/enabled=0/enabled=1/g' /etc/yum.repos.d/fedora.repo && sed -i 's/enabled=0/enabled=1/g' /etc/yum.repos.d/fedora-updates.repo
 
       # 2. Install Core Tools (RPMs)
       # Now that repos are forced on, these WILL work.
-      - RUN rpm-ostree install -y \
-          git zsh util-linux-user stow \
-          neovim distrobox taskwarrior
+      - RUN rpm-ostree install -y git zsh util-linux-user stow neovim distrobox taskwarrior
 
       # 3. Vendor Binaries (The "Managed" Fix)
       # We bypass RPMs for these to ensure we get the exact binaries we want.
@@ -31,10 +29,8 @@ modules:
       - RUN curl -L "https://github.com/eza-community/eza/releases/latest/download/eza_x86_64-unknown-linux-gnu.tar.gz" | tar xz -C /usr/bin eza
 
       # Yazi (File Manager)
-      - RUN curl -L "https://github.com/sxyazi/yazi/releases/download/v0.3.3/yazi-x86_64-unknown-linux-gnu.zip" -o /tmp/yazi.zip && \
-            unzip /tmp/yazi.zip -d /tmp/ && \
-            mv /tmp/yazi-x86_64-unknown-linux-gnu/yazi /usr/bin/ && \
-            rm -rf /tmp/yazi*
+      # Flattened to single line for YAML safety
+      - RUN curl -L "https://github.com/sxyazi/yazi/releases/download/v0.3.3/yazi-x86_64-unknown-linux-gnu.zip" -o /tmp/yazi.zip && unzip /tmp/yazi.zip -d /tmp/ && mv /tmp/yazi-x86_64-unknown-linux-gnu/yazi /usr/bin/ && rm -rf /tmp/yazi*
 
       # Atuin (Optional shell history, often requested with these tools)
       - RUN curl --proto '=https' --tlsv1.2 -LsSf https://setup.atuin.sh | sh -s -- -y
