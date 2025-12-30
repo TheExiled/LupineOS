@@ -20,7 +20,11 @@ echo ">> Installing Managed Binaries..."
 curl -sS https://starship.rs/install.sh | sh -s -- -y -b /usr/bin
 
 # Eza
-curl -L "https://github.com/eza-community/eza/releases/latest/download/eza_x86_64-unknown-linux-gnu.tar.gz" | tar xz -C /usr/bin eza
+curl -L "https://github.com/eza-community/eza/releases/latest/download/eza_x86_64-unknown-linux-gnu.tar.gz" -o /tmp/eza.tar.gz
+tar xz -f /tmp/eza.tar.gz -C /tmp
+mv /tmp/eza /usr/bin/eza
+chmod +x /usr/bin/eza
+rm /tmp/eza.tar.gz
 
 # Yazi
 curl -L "https://github.com/sxyazi/yazi/releases/download/v0.3.3/yazi-x86_64-unknown-linux-gnu.zip" -o /tmp/yazi.zip
