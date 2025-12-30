@@ -33,7 +33,11 @@ mv /tmp/yazi-x86_64-unknown-linux-gnu/yazi /usr/bin/
 rm -rf /tmp/yazi*
 
 # Atuin
-curl --proto '=https' --tlsv1.2 -LsSf https://setup.atuin.sh | sh -s -- -y
+curl -L "https://github.com/atuinsh/atuin/releases/latest/download/atuin-x86_64-unknown-linux-gnu.tar.gz" -o /tmp/atuin.tar.gz
+tar xz -f /tmp/atuin.tar.gz -C /tmp
+mv /tmp/atuin-x86_64-unknown-linux-gnu/atuin /usr/bin/atuin
+chmod +x /usr/bin/atuin
+rm -rf /tmp/atuin*
 
 # Zoxide
 curl -sS https://raw.githubusercontent.com/ajeetdsouza/zoxide/main/install.sh | sh -s -- -b /usr/bin
