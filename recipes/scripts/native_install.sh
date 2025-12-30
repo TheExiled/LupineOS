@@ -1,5 +1,6 @@
 #!/bin/bash
 set -eou pipefail
+set -x # Enable verbose debugging
 
 # --- 1. FORCE ENABLE REPOS ("The Core Fix") ---
 echo ">> Force Enabling Fedora Repos..."
@@ -10,7 +11,7 @@ sed -i 's/enabled=0/enabled=1/g' /etc/yum.repos.d/fedora-updates.repo
 echo ">> Installing Core RPMs..."
 rpm-ostree install -y \
     git zsh util-linux-user stow \
-    neovim distrobox taskwarrior
+    neovim distrobox taskwarrior unzip
 
 # --- 3. VENDOR BINARIES ("The Managed Fix") ---
 echo ">> Installing Managed Binaries..."
