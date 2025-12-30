@@ -11,7 +11,7 @@ sed -i 's/enabled=0/enabled=1/g' /etc/yum.repos.d/fedora-updates.repo
 echo ">> Installing Core RPMs..."
 rpm-ostree install -y \
     git zsh util-linux-user stow \
-    neovim distrobox task unzip
+    neovim distrobox task unzip plymouth-plugin-script
 
 # --- 3. VENDOR BINARIES ("The Managed Fix") ---
 echo ">> Installing Managed Binaries..."
