@@ -47,15 +47,31 @@ chmod +x /usr/bin/zoxide
 rm -rf /tmp/zoxide.tar.gz
 
 # FZF
-curl -L "https://github.com/junegunn/fzf/releases/download/v0.55.0/fzf-0.55.0-linux_amd64.tar.gz" | tar xz -C /usr/bin fzf
+curl -L "https://github.com/junegunn/fzf/releases/download/v0.55.0/fzf-0.55.0-linux_amd64.tar.gz" -o /tmp/fzf.tar.gz
+tar xz -f /tmp/fzf.tar.gz -C /tmp
+mv /tmp/fzf /usr/bin/fzf
+chmod +x /usr/bin/fzf
+rm -rf /tmp/fzf.tar.gz
 
 # Bat
-curl -L "https://github.com/sharkdp/bat/releases/download/v0.24.0/bat-v0.24.0-x86_64-unknown-linux-musl.tar.gz" | tar xz --strip-components=1 -C /usr/bin */bat
+curl -L "https://github.com/sharkdp/bat/releases/download/v0.24.0/bat-v0.24.0-x86_64-unknown-linux-musl.tar.gz" -o /tmp/bat.tar.gz
+tar xz -f /tmp/bat.tar.gz -C /tmp
+mv /tmp/bat-v0.24.0-x86_64-unknown-linux-musl/bat /usr/bin/bat
+chmod +x /usr/bin/bat
+rm -rf /tmp/bat*
 
 # Ripgrep
-curl -L "https://github.com/BurntSushi/ripgrep/releases/download/14.1.0/ripgrep-14.1.0-x86_64-unknown-linux-musl.tar.gz" | tar xz --strip-components=1 -C /usr/bin */rg
+curl -L "https://github.com/BurntSushi/ripgrep/releases/download/14.1.0/ripgrep-14.1.0-x86_64-unknown-linux-musl.tar.gz" -o /tmp/rg.tar.gz
+tar xz -f /tmp/rg.tar.gz -C /tmp
+mv /tmp/ripgrep-14.1.0-x86_64-unknown-linux-musl/rg /usr/bin/rg
+chmod +x /usr/bin/rg
+rm -rf /tmp/rg*
 
 # FD
-curl -L "https://github.com/sharkdp/fd/releases/download/v10.2.0/fd-v10.2.0-x86_64-unknown-linux-musl.tar.gz" | tar xz --strip-components=1 -C /usr/bin */fd
+curl -L "https://github.com/sharkdp/fd/releases/download/v10.2.0/fd-v10.2.0-x86_64-unknown-linux-musl.tar.gz" -o /tmp/fd.tar.gz
+tar xz -f /tmp/fd.tar.gz -C /tmp
+mv /tmp/fd-v10.2.0-x86_64-unknown-linux-musl/fd /usr/bin/fd
+chmod +x /usr/bin/fd
+rm -rf /tmp/fd*
 
 echo ">> Native Installation Complete."
