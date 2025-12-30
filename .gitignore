@@ -9,3 +9,11 @@
 aws/
 cosign.key
 sandbox/
+# Build Artifacts
+iso-result/
+iso-build/
+pkglists/
+final-pkgsizes.txt
+original-pkgsizes.txt
+lorax.conf
+*.iso
