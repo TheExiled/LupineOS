@@ -2,41 +2,63 @@
 name: lupineos
 description: "The WolfPack - Custom Fedora Atomic Workstation"
 
-# --- BASE IMAGE: COSMIC ATOMIC (uBlue) ---
-# We switch to Universal Blue because it has better repo support for layering.
-# The official fedora-ostree-desktops image was missing standard repos.
-base-image: ghcr.io/ublue-os/cosmic-atomic-main
-image-version: latest  # '41' tag does not exist for this image, usage 'latest'
+# --- BASE IMAGE: COSMIC ATOMIC ---
+# Reverting to official base. We will FORCE ENABLE repos in the containerfile.
+base-image: quay.io/fedora-ostree-desktops/cosmic-atomic
+image-version: 43
 
 modules:
   # --- The "Raw Mode" Build ---
   - type: containerfile
-    snippets:
-      # 1. Enable Community Repos (COPR)
-      # We download the repos and explicitly DISABLE gpgcheck to avoid build failures.
-      # flattened to single lines to prevent YAML/Shell escaping issues (double backslash error)
-      - RUN curl -L -o /etc/yum.repos.d/atim-starship.repo https://copr.fedorainfracloud.org/coprs/atim/starship/repo/fedora-43/atim-starship-fedora-43.repo && sed -i 's/gpgcheck=1/gpgcheck=0/g' /etc/yum.repos.d/atim-starship.repo
-      - RUN curl -L -o /etc/yum.repos.d/alternateved-eza.repo https://copr.fedorainfracloud.org/coprs/alternateved/eza/repo/fedora-43/alternateved-eza-fedora-43.repo && sed -i 's/gpgcheck=1/gpgcheck=0/g' /etc/yum.repos.d/alternateved-eza.repo
-      - RUN curl -L -o /etc/yum.repos.d/varlad-yazi.repo https://copr.fedorainfracloud.org/coprs/varlad/yazi/repo/fedora-43/varlad-yazi-fedora-43.repo && sed -i 's/gpgcheck=1/gpgcheck=0/g' /etc/yum.repos.d/varlad-yazi.repo
+      # 1. FORCE ENABLE STANDARD REPOS (The "Core" Fix)
+      # The base image defaults to 'updates-archive' only. We force enable the main repos.
+      - RUN sed -i 's/enabled=0/enabled=1/g' /etc/yum.repos.d/fedora.repo && \
+            sed -i 's/enabled=0/enabled=1/g' /etc/yum.repos.d/fedora-updates.repo
 
-      # 2. Install Fedora Core Tools (Stable)
+      # 2. Install Core Tools (RPMs)
+      # Now that repos are forced on, these WILL work.
       - RUN rpm-ostree install -y \
           git zsh util-linux-user stow \
-          helix neovim ripgrep bat zoxide \
-          fzf fd-find tealdeer fastfetch \
-          distrobox taskwarrior
+          neovim distrobox taskwarrior
 
-      # 3. Install Bleeding Edge Tools (COPR)
-      - RUN rpm-ostree install -y \
-          starship \
-          eza \
-          yazi
+      # 3. Vendor Binaries (The "Managed" Fix)
+      # We bypass RPMs for these to ensure we get the exact binaries we want.
+      
+      # Starship
+      - RUN curl -sS https://starship.rs/install.sh | sh -s -- -y -b /usr/bin
+
+      # Eza (Modern ls) - Pulling generic linux binary
+      - RUN curl -L "https://github.com/eza-community/eza/releases/latest/download/eza_x86_64-unknown-linux-gnu.tar.gz" | tar xz -C /usr/bin eza
+
+      # Yazi (File Manager)
+      - RUN curl -L "https://github.com/sxyazi/yazi/releases/download/v0.3.3/yazi-x86_64-unknown-linux-gnu.zip" -o /tmp/yazi.zip && \
+            unzip /tmp/yazi.zip -d /tmp/ && \
+            mv /tmp/yazi-x86_64-unknown-linux-gnu/yazi /usr/bin/ && \
+            rm -rf /tmp/yazi*
+
+      # Atuin (Optional shell history, often requested with these tools)
+      - RUN curl --proto '=https' --tlsv1.2 -LsSf https://setup.atuin.sh | sh -s -- -y
+
+      # Zoxide (Smarter cd)
+      - RUN curl -sS https://raw.githubusercontent.com/ajeetdsouza/zoxide/main/install.sh | sh -s -- -b /usr/bin
+
+      # FZF
+      - RUN curl -L "https://github.com/junegunn/fzf/releases/download/v0.55.0/fzf-0.55.0-linux_amd64.tar.gz" | tar xz -C /usr/bin fzf
+
+      # Bat (Cat clone)
+      - RUN curl -L "https://github.com/sharkdp/bat/releases/download/v0.24.0/bat-v0.24.0-x86_64-unknown-linux-musl.tar.gz" | tar xz --strip-components=1 -C /usr/bin */bat
+
+      # Ripgrep
+      - RUN curl -L "https://github.com/BurntSushi/ripgrep/releases/download/14.1.0/ripgrep-14.1.0-x86_64-unknown-linux-musl.tar.gz" | tar xz --strip-components=1 -C /usr/bin */rg
+
+      # FD
+      - RUN curl -L "https://github.com/sharkdp/fd/releases/download/v10.2.0/fd-v10.2.0-x86_64-unknown-linux-musl.tar.gz" | tar xz --strip-components=1 -C /usr/bin */fd
 
       # 4. Copy Configs & Assets
       - COPY recipes/configs /etc/skel/.config
       - COPY recipes/assets /opt/lupineos/assets
       
-      # 5. Copy Branding & Systemd (From other agent's work)
+      # 5. Copy Branding & Systemd
       # Wallpapers & Plymouth
       - COPY recipes/assets/wallpapers /usr/share/backgrounds/lupineos
       - COPY recipes/assets/plymouth/lupineos /usr/share/plymouth/themes/lupineos
