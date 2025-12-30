@@ -17,11 +17,7 @@ rpm-ostree install -y \
 echo ">> Installing Managed Binaries..."
 
 # Starship
-curl -L "https://github.com/starship/starship/releases/latest/download/starship-x86_64-unknown-linux-musl.tar.gz" -o /tmp/starship.tar.gz
-tar xz -f /tmp/starship.tar.gz -C /tmp
-mv /tmp/starship /usr/bin/starship
-chmod +x /usr/bin/starship
-rm -rf /tmp/starship.tar.gz
+curl -sS https://starship.rs/install.sh | sh -s -- -y -b /usr/bin
 
 # Eza
 curl -L "https://github.com/eza-community/eza/releases/latest/download/eza_x86_64-unknown-linux-gnu.tar.gz" -o /tmp/eza.tar.gz
@@ -36,7 +32,7 @@ unzip /tmp/yazi.zip -d /tmp/
 mv /tmp/yazi-x86_64-unknown-linux-gnu/yazi /usr/bin/
 rm -rf /tmp/yazi*
 
-# Atuin
+# Atuin (Keep manual extract - script failed previously)
 curl -L "https://github.com/atuinsh/atuin/releases/latest/download/atuin-x86_64-unknown-linux-gnu.tar.gz" -o /tmp/atuin.tar.gz
 tar xz -f /tmp/atuin.tar.gz -C /tmp
 mv /tmp/atuin-x86_64-unknown-linux-gnu/atuin /usr/bin/atuin
@@ -44,11 +40,7 @@ chmod +x /usr/bin/atuin
 rm -rf /tmp/atuin*
 
 # Zoxide
-curl -L "https://github.com/ajeetdsouza/zoxide/releases/latest/download/zoxide-x86_64-unknown-linux-musl.tar.gz" -o /tmp/zoxide.tar.gz
-tar xz -f /tmp/zoxide.tar.gz -C /tmp
-mv /tmp/zoxide /usr/bin/zoxide
-chmod +x /usr/bin/zoxide
-rm -rf /tmp/zoxide.tar.gz
+curl -sS https://raw.githubusercontent.com/ajeetdsouza/zoxide/main/install.sh | sh -s -- -b /usr/bin
 
 # FZF
 curl -L "https://github.com/junegunn/fzf/releases/download/v0.55.0/fzf-0.55.0-linux_amd64.tar.gz" | tar xz -C /usr/bin fzf
