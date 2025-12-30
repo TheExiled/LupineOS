@@ -50,33 +50,45 @@
                 <h1 id="install">Installation Guide</h1>
                 <p>Follow these steps to install LupineOS on your machine (Bare Metal).</p>
 
-                <div class="placeholder-box">
-                    <strong>[PROMPT 1: Installation Steps]</strong><br>
-                    Please provide the brief step-by-step process. <br>
-                    <em>Example: "1. Flashing USB, 2. Boot Menu key, 3. Selecting Disk..."</em>
-                </div>
+                <ol class="steps-list">
+                    <li>Download the **LupineOS ISO** from the home page (Standard or NVIDIA).</li>
+                    <li>Flash the ISO to a USB drive (8GB+) using <strong>Fedora Media Writer</strong> or <strong>Balena
+                            Etcher</strong>.</li>
+                    <li>Reboot and enter your BIOS/UEFI boot menu (usually F12, F2, or Del).</li>
+                    <li>Select "Install LupineOS" from the GRUB menu.</li>
+                    <li>Follow the graphical installer to select your disk and create your user account.</li>
+                </ol>
 
                 <hr>
 
                 <h1 id="post-install">Post-Install Setup</h1>
                 <p>First things to do after you boot into your new Atomic environment.</p>
 
-                <div class="placeholder-box">
-                    <strong>[PROMPT 2: Post-Install Actions]</strong><br>
-                    What should the user do first? <br>
-                    <em>Example: "Log into GitHub, Run 'ujust setup-nvidia', Set up backup..."</em>
+                <p>Once you have booted into your new system, open the terminal and initialize "The Pack".</p>
+                <div class="code-block">
+                    <code>ujust setup</code>
                 </div>
+                <p>This command will:</p>
+                <ul>
+                    <li>Install essential Flatpaks (Browser, Media players).</li>
+                    <li>Sets up the <strong>Alpha</strong> (Dev) and <strong>Beta</strong> (Admin) containers.</li>
+                    <li>Configures your shell prompt (Starship).</li>
+                </ul>
 
                 <hr>
 
                 <h1 id="containers">Using The Pack (Distrobox)</h1>
                 <p>How to access your Wolf Pack containers.</p>
 
-                <div class="placeholder-box">
-                    <strong>[PROMPT 3: Container Commands]</strong><br>
-                    How does a user enter the 'dev' or 'sec' container? <br>
-                    <em>Example: `distrobox enter dev` or specific shortcuts you've set up.</em>
+                <p>LupineOS uses <strong>Distrobox</strong> to manage your "Wolf Pack" environments. You can enter any
+                    container instantly from your terminal.</p>
+                <div class="code-block">
+                    <code>distrobox enter alpha   # Enter Fedora Dev Container</code><br>
+                    <code>distrobox enter beta    # Enter Ubuntu Admin Container</code><br>
+                    <code>distrobox enter omega   # Enter Kali Security Container</code>
                 </div>
+                <p>Pro Tip: You can export apps from inside the container to your host menu using
+                    <code>distrobox-export --app [appname]</code>.</p>
 
             </article>
         </div>

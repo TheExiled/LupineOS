@@ -705,6 +705,42 @@ nav a.active {
     font-size: 0.9rem;
 }
 
+/* Documentation Styling */
+.steps-list {
+    margin-left: 2rem;
+    margin-bottom: 2rem;
+    color: var(--text-muted);
+}
+
+.steps-list li {
+    margin-bottom: 0.8rem;
+    padding-left: 0.5rem;
+}
+
+.steps-list strong {
+    color: white;
+}
+
+.code-block {
+    background: #000;
+    border: 1px solid var(--glass-border);
+    padding: 1.2rem;
+    border-radius: 8px;
+    font-family: monospace;
+    color: #a5b3ce;
+    margin-bottom: 1.5rem;
+    overflow-x: auto;
+}
+
+.code-block code {
+    display: block;
+    margin-bottom: 0.5rem;
+}
+
+.code-block code:last-child {
+    margin-bottom: 0;
+}
+
 /* Blog Grid */
 .blog-grid {
     display: grid;

@@ -1,0 +1,9 @@
+[Desktop Entry]
+Name=LupineOS Welcome
+Comment=Sets up the WolfPack container environment
+Exec=/usr/bin/lupineos-welcome
+Icon=system-help-symbolic
+Terminal=false
+Type=Application
+Categories=Utility;
+X-GNOME-Autostart-enabled=true

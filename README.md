@@ -16,29 +16,51 @@
 
 ______________________________________________________________________
 
-🚀 Installation (Native Image)
+## 🚀 Installation
 
-1. **Download ISO:** Grab the latest `lupineos-installer.iso` from GitHub Releases.
-2. **Install:**
+### Option A: Download Official Release
+1. Go to **[GitHub Releases](https://github.com/TheExiled/LupineOS/releases)**.
+2. **Download ISO:** Grab the latest `lupineos-41.iso` from GitHub Releases.
+3. **Install:**
    - Boot the USB.
-   - Install Fedora.
-   - **That's it.** You will wake up in a fully configured Cosmic desktop. No post-install scripts required.
+   - Install Fedora to disk.
+   - Reboot into your new system.
+4. **Initialize Environment (Important):**
+   Open a terminal and run the bootstrap script to set up your dotfiles and containers:
+   ```bash
+   git clone https://github.com/TheExiled/LupineOS.git ~/LupineOS
+   cd ~/LupineOS && ./install.sh
+   ```
+
+### Option B: Build from Source (Native)
+We use a **Native Containerized Build** process to ensure reproducibility while using native Fedora tools (`lorax`, `mkksiso`).
+
+**Prerequisites:**
+- Linux Host (Fedora Recommended)
+- `podman` installed
+- `sudo` privileges (required for loop device creation)
+
+**Build Command:**
+```bash
+./generate-iso-native.sh
+```
+
+**What this does:**
+1. Spins up a privileged **Fedora 41** container.
+2. Manually creates loop devices (essential for `lorax`).
+3. Installs `lorax`, `ostree`, and `mkksiso`.
+4. **Phase 1**: Builds a raw `boot.iso` using `lorax`.
+5. **Phase 2**: Injects our custom Kickstart capability using `mkksiso`.
+6. Outputs `lupineos-41.iso` and generates a SHA256 checksum.
+
+**Output:**
+- `lupineos-41.iso`: The bootable installer.
+- `docs/checksum.txt`: Hash for verification.
 
 ______________________________________________________________________
 
-## 🛠 Manual Installation (Legacy)
-
-*Note: The legacy bootstrap script is available on the `legacy-bootstrap` branch.*
-
-*Note: The legacy bootstrap script is available on the `legacy-bootstrap` branch.*
-
-______________________________________________________________________
-
-## 🛠 Manual Installation (Legacy)
-
-*Note: The legacy bootstrap script is available on the `legacy-bootstrap` branch.*
-
-If you are already on Fedora Atomic and just want the dotfiles:
+## 🛠 Manual Bootstrap (Legacy)
+*For existing Fedora Atomic users who just want the dotfiles.*
 
 1. **Clone Repo:** `git clone https://github.com/TheExiled/LupineOS.git ~/LupineOS`
 2. **Run Script:** `cd ~/LupineOS && ./install.sh`
@@ -127,7 +149,5 @@ We maintain three distinct environments managed via Distrobox.
 
 - `configs/`: Shared dotfiles (Zellij, Helix, Starship).
 - `assets/`: Branding and Wallpapers.
-- `scripts/`:
-  - **`setup_admin.sh`**: Builds the Ubuntu Sysadmin container.
-  - **`setup_sec.sh`**: Builds the Kali Security container.
-  - **`install_rust_tools.sh`**: Compiles and exports Rust replacements.
+- **`generate-iso-native.sh`**: The official ISO build script (Native Fedora 41 Container).
+  - **`install.sh`**: Dotfile bootstrap script.

@@ -19,7 +19,7 @@ distrobox enter dev -- sh -c '
     # bat = bat (Cat replacement)
     
     echo "Compiling tools (this may take a moment)..."
-    cargo install du-dust procs tealdeer zoxide bat
+    cargo install du-dust procs tealdeer zoxide bat antigravity gemini-cli
 
     # 3. Export to Host
     # This creates a symlink in ~/.local/bin on your Fedora Host
@@ -29,6 +29,8 @@ distrobox enter dev -- sh -c '
     distrobox-export --bin $(which tldr)
     distrobox-export --bin $(which zoxide)
     distrobox-export --bin $(which bat)
+    distrobox-export --bin $(which antigravity)
+    distrobox-export --bin $(which gemini)
     
     # Initialize tldr cache
     tldr --update

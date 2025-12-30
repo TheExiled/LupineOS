@@ -27,10 +27,13 @@ modules:
       - RUN plymouth-set-default-theme lupineos
       
       # Welcome App (Example placeholder)
-      # - COPY recipes/bin/lupineos-welcome /usr/bin/lupineos-welcome
+      - COPY recipes/bin/lupineos-welcome /usr/bin/lupineos-welcome
 
       # Systemd Units
       - COPY recipes/assets/systemd/lupineos-firstboot.service /usr/lib/systemd/system/lupineos-firstboot.service
+
+      # 7. Autostart (First Login Welcome)
+      - COPY recipes/assets/autostart /etc/xdg/autostart
 
       # 6. Enable Services
       - RUN systemctl enable podman.socket
