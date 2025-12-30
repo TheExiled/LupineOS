@@ -40,7 +40,11 @@ chmod +x /usr/bin/atuin
 rm -rf /tmp/atuin*
 
 # Zoxide
-curl -sS https://raw.githubusercontent.com/ajeetdsouza/zoxide/main/install.sh | sh -s -- --bin-dir /usr/bin
+curl -L "https://github.com/ajeetdsouza/zoxide/releases/download/v0.9.6/zoxide-0.9.6-x86_64-unknown-linux-musl.tar.gz" -o /tmp/zoxide.tar.gz
+tar xz -f /tmp/zoxide.tar.gz -C /tmp
+mv /tmp/zoxide /usr/bin/zoxide
+chmod +x /usr/bin/zoxide
+rm -rf /tmp/zoxide.tar.gz
 
 # FZF
 curl -L "https://github.com/junegunn/fzf/releases/download/v0.55.0/fzf-0.55.0-linux_amd64.tar.gz" | tar xz -C /usr/bin fzf
