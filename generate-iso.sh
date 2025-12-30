@@ -26,7 +26,6 @@ echo "Pulling builder and generating ISO... (This may take a few minutes)"
 
 sudo podman run --rm --privileged --volume .:/output \
   ghcr.io/jasonn3/build-container-installer:latest \
-  files-iso \
   image_repo="ghcr.io/${GITHUB_USER}" \
   image_name="${IMAGE_NAME}" \
   image_tag="${TAG}" \
