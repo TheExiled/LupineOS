@@ -324,6 +324,22 @@ nav a.nav-cta:hover {
     background: linear-gradient(to bottom, #131418, var(--bg-dark));
 }
 
+.quote {
+    font-style: italic;
+    font-size: 1.2rem;
+    color: var(--primary-orange);
+    margin-bottom: 1rem;
+    font-weight: 500;
+}
+
+.description {
+    color: var(--text-muted);
+    font-size: 1.05rem;
+    max-width: 700px;
+    margin: 0 auto;
+    line-height: 1.7;
+}
+
 .pack-grid {
     display: grid;
     grid-template-columns: 1.2fr 1fr;
