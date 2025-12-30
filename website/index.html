@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LupineOS - The Atomic Workstation</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header class="glass-nav">
+        <div class="container nav-container">
+            <div class="logo">Lupine<span class="text-orange">OS</span></div>
+            <nav>
+                <a href="#features">Features</a>
+                <a href="#docs">Docs</a>
+                <a href="#blog">Blog</a>
+                <a href="#download" class="nav-cta">Get LupineOS</a>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="container hero-container">
+                <div class="hero-content">
+                    <h1 class="fade-in-up">The Future is <span class="text-gradient">Atomic</span>.</h1>
+                    <p class="subtitle fade-in-up delay-1">Unbreakable, immutable, and designed for developers. Experience the Linux workstation perfected for reliability.</p>
+                    
+                    <div class="download-widget fade-in-up delay-2">
+                        <div class="flavour-selector">
+                            <label for="gpu-select">Select your GPU:</label>
+                            <div class="custom-select-wrapper">
+                                <select id="gpu-select">
+                                    <option value="intel-amd">Intel / AMD (Standard)</option>
+                                    <option value="nvidia">NVIDIA (Proprietary Drivers)</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="cta-group">
+                            <a id="download-btn" href="#" class="btn-primary">
+                                Download ISO <span class="version-tag">v1.0</span>
+                            </a>
+                            <div class="download-meta">
+                                <span id="iso-size">2.4 GB</span> • <a href="https://github.com/LupineOS/lupineos" target="_blank">Source Code</a>
+                            </div>
+                        </div>
+                        <a href="/docs/install" class="first-steps-link">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+                            First Steps: Installation Guide
+                        </a>
+                    </div>
+                </div>
+                <div class="hero-visual fade-in-up delay-3">
+                    <div class="glow-effect"></div>
+                    <img src="assets/hero-laptop.png" alt="LupineOS running on a laptop" class="floating-laptop">
+                </div>
+            </div>
+        </section>
+
+        <!-- Comparison Section -->
+        <section class="comparison" id="features">
+            <div class="container">
+                <h2 class="section-title text-center">Why <span class="text-orange">Atomic</span> Matters</h2>
+                <div class="comparison-grid">
+                    <div class="comparison-visual scroll-reveal">
+                        <img src="assets/atomic-diagram.png" alt="Traditional Linux vs Atomic LupineOS" class="diagram-img">
+                    </div>
+                    <div class="comparison-text scroll-reveal">
+                        <div class="feature-card">
+                            <h3>Unbreakable Core</h3>
+                            <p>Updates are applied atomically in the background. If something goes wrong, you just reboot into the previous working state. No more broken packages.</p>
+                        </div>
+                        <div class="feature-card">
+                            <h3>Developer First</h3>
+                            <p>Pre-configured with <code>starship</code>, <code>zellij</code>, and the best CLI tools. Your development environment is ready out of the box.</p>
+                        </div>
+                        <div class="feature-card">
+                            <h3>Clean & Fast</h3>
+                            <p>No bloat. A curated GNOME experience with a polished "Orange & Black" aesthetic that feels premium from the first boot.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Call to Action Footer -->
+        <section class="bottom-cta">
+            <div class="container text-center">
+                <h2>Ready to switch?</h2>
+                <p>Join the future of Linux distributions.</p>
+                <a href="#download" class="btn-primary" onclick="document.querySelector('.hero').scrollIntoView({behavior: 'smooth'})">Get Started Now</a>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container footer-content">
+            <p>&copy; 2025 LupineOS Project. Built with <span class="text-orange">♥</span> for the Open Source Community.</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
