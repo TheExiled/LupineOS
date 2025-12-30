@@ -24,7 +24,7 @@ modules:
       # Wallpapers & Plymouth
       - COPY recipes/assets/wallpapers /usr/share/backgrounds/lupineos
       - COPY recipes/assets/plymouth/lupineos /usr/share/plymouth/themes/lupineos
-      - RUN plymouth-set-default-theme -R lupineos
+      - RUN plymouth-set-default-theme lupineos
       
       # Welcome App (Example placeholder)
       # - COPY recipes/bin/lupineos-welcome /usr/bin/lupineos-welcome
