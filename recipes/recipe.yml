@@ -5,7 +5,7 @@ description: "The WolfPack - Custom Fedora Atomic Workstation"
 # --- BASE IMAGE: COSMIC ATOMIC ---
 # Reverting to official base. We will FORCE ENABLE repos in the containerfile.
 base-image: quay.io/fedora-ostree-desktops/cosmic-atomic
-image-version: 43
+image-version: 41
 
 modules:
   # --- The "Raw Mode" Build ---
@@ -13,12 +13,13 @@ modules:
     snippets:
       # 1. Copy Payload
       - COPY recipes/configs /etc/skel/.config
+      - COPY recipes/etc /etc
       - COPY recipes/assets /opt/lupineos/assets
       - COPY recipes/scripts /opt/lupineos/scripts
       
       # 2. Run Native Install Script
       # This handles Repo Enabling + RPM Install + Binary Vending in a robust shell environment.
-      - RUN chmod +x /opt/lupineos/scripts/native_install.sh && /opt/lupineos/scripts/native_install.sh
+      - RUN chmod +x /opt/lupineos/scripts/*.sh && /opt/lupineos/scripts/native_install.sh
       
       # 5. Copy Branding & Systemd
       # Wallpapers & Plymouth

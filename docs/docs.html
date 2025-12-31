@@ -43,6 +43,13 @@
                 <ul>
                     <li><a href="#updates">Updates & Rollbacks</a></li>
                     <li><a href="#drivers">NVIDIA Drivers</a></li>
+                    <li><a href="#gaming">Gaming</a></li>
+                    <li><a href="#privacy">Privacy Tools</a></li>
+                </ul>
+                <h3>Deep Dive</h3>
+                <ul>
+                    <li><a href="#core-concepts">Core Concepts</a></li>
+                    <li><a href="#tech-stack">Tech Stack</a></li>
                 </ul>
             </aside>
 
@@ -88,7 +95,109 @@
                     <code>distrobox enter omega   # Enter Kali Security Container</code>
                 </div>
                 <p>Pro Tip: You can export apps from inside the container to your host menu using
-                    <code>distrobox-export --app [appname]</code>.</p>
+                    <code>distrobox-export --app [appname]</code>.
+                </p>
+
+                <hr>
+
+                <h1 id="workflows">Workflows (Dev/Sec)</h1>
+                <p>LupineOS isolates work contexts to keep your system clean.</p>
+                <ul>
+                    <li><strong>Dev (Alpha):</strong> Use for coding projects (Python, Node, Rust). `distrobox enter
+                        alpha`.</li>
+                    <li><strong>Admin (Beta):</strong> Use for infrastructure (Terraform, Ansible). `distrobox enter
+                        beta`.</li>
+                    <li><strong>Sec (Omega):</strong> Use for security auditing. `distrobox enter omega`.</li>
+                </ul>
+                <p>Files in your home directory are shared automatically with all containers.</p>
+
+                <hr>
+
+                <h1 id="updates">Updates & Rollbacks</h1>
+                <p>LupineOS tracks the <strong>Fedora Rawhide (Future Fedora 43)</strong> stream, providing access to
+                    the absolute latest kernel technologies.</p>
+                <p>Because LupineOS is atomic (using <strong>rpm-ostree</strong> technology from Project Atomic),
+                    updates are safe regardless of how bleeding-edge they are.</p>
+                <h3>Updating</h3>
+                <div class="code-block"><code>rpm-ostree upgrade</code></div>
+                <p>Reboot to apply the update.</p>
+                <h3>Rolling Back</h3>
+                <p>If an update breaks something, simply reboot and select the previous deployment from GRUB. Your
+                    system is immutable and resilient.</p>
+
+                <hr>
+
+                <h1 id="drivers">NVIDIA Drivers</h1>
+                <p>We automatically enable the <strong>RPMFusion</strong> (Non-Free) repository to ensure you have
+                    access to official proprietary NVIDIA drivers.</p>
+                <p>To verify your drivers are working:</p>
+                <div class="code-block"><code>nvidia-smi</code></div>
+                <p>Updates to drivers are handled automatically with system updates via RPMFusion.</p>
+
+                <hr>
+
+                <h1 id="gaming">Gaming on LupineOS</h1>
+                <p>LupineOS comes pre-loaded with the tools you need to game on Linux.</p>
+                <ul>
+                    <li><strong>Wine & Winetricks:</strong> For running Windows applications directly.</li>
+                    <li><strong>Lutris:</strong> Preserves your game library locally.</li>
+                    <li><strong>Protontricks:</strong> Manage Proton prefixes easily for Steam games.</li>
+                    <li><strong>Steam:</strong> Compatible via Flatpak (recommended) or RPM from Fusion.</li>
+                </ul>
+                <p>We enable <code>gamemode</code> by default to prioritize performance.</p>
+
+                <hr>
+
+                <h1 id="privacy">Privacy & Security</h1>
+                <p>Your privacy toolkit is built-in as a secure <strong>Distrobox container</strong>.</p>
+                <ul>
+                    <li><strong>Tor Browser & OnionCircuits:</strong> Anonymous browsing.</li>
+                    <li><strong>Mat2:</strong> Metadata anonymization tool for your files.</li>
+                    <li><strong>Gocryptfs:</strong> Create encrypted folders to lock away sensitive data.</li>
+                    <li><strong>Debian Base:</strong> A stable, trusted foundation for privacy operations.</li>
+                </ul>
+                <p>To access, run <code>distrobox enter privacy</code> or select usage during system setup.</p>
+
+                <hr>
+
+                <h1 id="core-concepts">Core Concepts</h1>
+                <p>New to Linux or just new to Atomic? Here's what makes LupineOS special.</p>
+
+                <h3>Atomic (Immutable)</h3>
+                <p>In a traditional OS, updates change files live. If power cuts, your system breaks. In
+                    <strong>Atomic</strong> Linux (like LupineOS), updates are built in the background as a separate
+                    image. You reboot into the new image. If it fails, you just reboot back to the old one. It's
+                    un-brickable.</p>
+
+                <h3>Bleeding Edge (Fedora Rawhide)</h3>
+                <p>We track <strong>Fedora Rawhide</strong>. Why? Because casual users deserve support for the latest
+                    GPUs, Wi-Fi cards, and game controllers <em>now</em>, not in 6 months.</p>
+
+                <h3>Flatpak</h3>
+                <p>Think of this as the "App Store" model for Linux. Apps are sandboxed (isolated) from your system.
+                    They contain all their own dependencies, so they just work, regardless of what version of Linux you
+                    run.</p>
+
+                <hr>
+
+                <h1 id="tech-stack">The Tech Stack</h1>
+
+                <h3>Rust</h3>
+                <p>A programming language focused on <strong>memory safety</strong> and <strong>performance</strong>. It
+                    prevents crashes before they happen. Critical parts of LupineOS (like the Desktop and Welcome App)
+                    are built in Rust.</p>
+
+                <h3>COSMIC Desktop</h3>
+                <p>Built by <strong>System76</strong>. It's the first desktop environment written in Rust. It features
+                    auto-tiling (windows arrange themselves) to help you stay focused.</p>
+
+                <h3>Helix</h3>
+                <p>A modern text editor for the terminal. It's like Vim, but designed to be helpful out of the box with
+                    pop-up menus and built-in language support. It's our default editor for config files.</p>
+
+                <h3>Markdown</h3>
+                <p>The language you are reading right now! It's a simple way to format text using symbols (like
+                    `**bold**` or `# Header`). We use it for all our documentation because it's clean and portable.</p>
 
             </article>
         </div>
@@ -98,6 +207,10 @@
         <div class="container footer-content">
             <p>&copy; 2025 LupineOS Project. Built with <span class="text-orange">♥</span> for the Open Source
                 Community.</p>
+            <p style="font-size: 0.8rem; opacity: 0.6; margin-top: 0.5rem;">
+                Built on <strong>Fedora Linux</strong>. Drivers provided by <strong>RPMFusion</strong>.
+                COSMIC by <strong>System76</strong>.
+            </p>
         </div>
     </footer>
 </body>

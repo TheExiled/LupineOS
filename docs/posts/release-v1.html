@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LupineOS v1.0 Release - Blog</title>
+    <link rel="stylesheet" href="../style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <header class="glass-nav">
+        <div class="container nav-container">
+            <a href="../index.html" class="logo-link">
+                <img src="../assets/logo-real.png" alt="LupineOS Logo" class="logo-img">
+            </a>
+            <nav>
+                <a href="../index.html#features">Features</a>
+                <a href="../docs.html">Docs</a>
+                <a href="../blog.html" class="active">Blog</a>
+                <a href="https://github.com/LupineOS/lupineos" target="_blank">Source</a>
+                <a href="../index.html#download" class="nav-cta">Get LupineOS</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="page-content">
+        <div class="container docs-layout">
+            <article class="blog-full-post">
+                <div class="blog-meta">Dec 29, 2025 • Release</div>
+                <h1>LupineOS v1.0: "WolfPack" Released</h1>
+
+                <p class="lead">The wait is over. The first stable release of LupineOS is here, bringing the power of
+                    Atomic Fedora and the speed of COSMIC to your workstation.</p>
+
+                <h2>What is LupineOS?</h2>
+                <p>LupineOS is an immutable, atomic Linux distribution. This means the core operating system is
+                    read-only and updated in the background. If an update breaks something, you can simply reboot into
+                    the previous version.</p>
+
+                <h2>Key Features in v1.0</h2>
+                <ul>
+                    <li><strong>Atomic Core:</strong> Built on Fedora Silverblue/Atomic technology.</li>
+                    <li><strong>COSMIC Desktop:</strong> A pure Rust-based desktop environment (Pre-Alpha build) that is
+                        fast and memory safe.</li>
+                    <li><strong>Gaming Ready:</strong> Now includes Wine, Lutris, Protontricks, and GameMode.</li>
+                    <li><strong>Privacy Focused:</strong> Dedicated "Privacy Vault" container with Tor and Gocryptfs.
+                    </li>
+                </ul>
+
+                <h2>The Pack System</h2>
+                <p>We believe in keeping your host system clean. That's why we use <strong>Distrobox</strong> to manage
+                    development environments.
+                <ul>
+                    <li><strong>Alpha:</strong> Fedora-based container for general development.</li>
+                    <li><strong>Beta:</strong> Ubuntu-based container for sysadmin tools.</li>
+                    <li><strong>Omega:</strong> Kali Linux container for security testing.</li>
+                    <li><strong>Privacy Vault:</strong> Debian-based container for anonymous browsing and encryption.
+                    </li>
+                </ul>
+                </p>
+
+                <div class="cta-group" style="margin-top: 4rem;">
+                    <a href="../index.html#download" class="btn-primary">Download v1.0</a>
+                </div>
+            </article>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container footer-content">
+            <p>&copy; 2025 LupineOS Project. Built with <span class="text-orange">♥</span> for the Open Source
+                Community.</p>
+        </div>
+    </footer>
+</body>
+
+</html>
