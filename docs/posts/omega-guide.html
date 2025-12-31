@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Omega Guide - LupineOS Blog</title>
+    <link rel="stylesheet" href="../style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <header class="glass-nav">
+        <div class="container nav-container">
+            <a href="../index.html" class="logo-link">
+                <img src="../assets/logo-real.png" alt="LupineOS Logo" class="logo-img">
+            </a>
+            <nav>
+                <a href="../index.html#features">Features</a>
+                <a href="../docs.html">Docs</a>
+                <a href="../blog.html" class="active">Blog</a>
+                <a href="https://github.com/LupineOS/lupineos" target="_blank">Source</a>
+                <a href="../index.html#download" class="nav-cta">Get LupineOS</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="page-content">
+        <div class="container docs-layout">
+            <article class="blog-full-post">
+                <div class="blog-meta">Dec 15, 2025 • Guide</div>
+                <h1>Pen-Testing with the Omega Container</h1>
+
+                <p class="lead">Security professionals need powerful tools, but installing them on your host can be
+                    messy. Enter the Omega container.</p>
+
+                <h2>What is Omega?</h2>
+                <p>The Omega container is a full **Kali Linux** environment running inside Distrobox. It has full access
+                    to your network hardware (via `host` networking) but keeps your file system clean.</p>
+
+                <h2>Getting Started</h2>
+                <p>To enter the container:</p>
+                <div class="code-block"><code>distrobox enter omega</code></div>
+
+                <p>From here, you can run all your favorite tools:</p>
+                <ul>
+                    <li><strong>Nmap:</strong> Network scanning.</li>
+                    <li><strong>Metasploit:</strong> Exploitation framework.</li>
+                    <li><strong>Burp Suite:</strong> Web app security testing.</li>
+                </ul>
+
+                <h2>Persistence</h2>
+                <p>Any files you save in your home folder are visible to your host, so you can easily write reports or
+                    analyze logs using your host's tools (like VS Code).</p>
+
+                <div class="cta-group" style="margin-top: 4rem;">
+                    <a href="../index.html#download" class="btn-primary">Get the Omega Container</a>
+                </div>
+                <div class="attribution-note" style="margin-top: 2rem; font-size: 0.9rem; opacity: 0.7;">
+                    <p><em>Kali Linux® is a registered trademark of OffSec. LupineOS is not affiliated with OffSec.</em>
+                    </p>
+                </div>
+            </article>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container footer-content">
+            <p>&copy; 2025 LupineOS Project. Built with <span class="text-orange">♥</span> for the Open Source
+                Community.</p>
+        </div>
+    </footer>
+</body>
+
+</html>

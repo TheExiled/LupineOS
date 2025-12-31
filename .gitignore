@@ -8,7 +8,7 @@
 *.zip
 aws/
 cosign.key
-sandbox/
+
 # Build Artifacts
 iso-result/
 iso-build/
@@ -18,3 +18,4 @@ original-pkgsizes.txt
 lorax.conf
 *.iso
 lupineos-41.iso.xz
+lupineos-41.iso

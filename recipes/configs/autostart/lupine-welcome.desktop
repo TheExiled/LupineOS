@@ -1,9 +1,0 @@
-[Desktop Entry]
-Type=Application
-Name=Welcome to LupineOS
-Comment=Get started with your new system
-Exec=/usr/bin/lupineos-welcome
-Icon=system-help-symbolic
-Terminal=false
-Categories=Utility;GTK;
-X-GNOME-Autostart-enabled=true

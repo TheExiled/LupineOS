@@ -9,8 +9,12 @@ cp "$CONFIG_FILE" "$CONFIG_FILE.bak"
 echo "   Backup saved to $CONFIG_FILE.bak"
 
 # 2. Define the Context Modules
-# We use a heredoc to append the [custom] blocks to the end of the file
-cat <<EOF >> "$CONFIG_FILE"
+# Check if we already patched it to prevent duplication
+if grep -q "custom.dev_context" "$CONFIG_FILE"; then
+    echo "   Config already patched, skipping append."
+else
+    # We use a heredoc to append the [custom] blocks to the end of the file
+    cat <<EOF >> "$CONFIG_FILE"
 
 # --- DISTROBOX CONTEXT BADGES ---
 
@@ -32,6 +36,7 @@ when = 'test "\$DISTROBOX_ENTER_NAME" = "sec"'
 style = "bold red"
 format = "[\$output](\$style) "
 EOF
+fi
 
 # 3. Prepend the format string to the top of the file
 # This ensures our new modules are actually rendered.

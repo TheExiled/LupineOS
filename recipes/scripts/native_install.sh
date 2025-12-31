@@ -5,13 +5,32 @@ set -x # Enable verbose debugging
 # --- 1. FORCE ENABLE REPOS ("The Core Fix") ---
 echo ">> Force Enabling Fedora Repos..."
 sed -i 's/enabled=0/enabled=1/g' /etc/yum.repos.d/fedora.repo
+sed -i 's/enabled=0/enabled=1/g' /etc/yum.repos.d/fedora.repo
 sed -i 's/enabled=0/enabled=1/g' /etc/yum.repos.d/fedora-updates.repo
 
-# --- 2. INSTALL CORE TOOLS (RPMs) ---
-echo ">> Installing Core RPMs..."
+echo ">> Enabling RPMFusion (for Drivers & Codecs)..."
 rpm-ostree install -y \
+    https://mirrors.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm \
+    https://mirrors.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm
+
+# --- 2. INSTALL CORE TOOLS (RPMs) ---
+# --- 2. INSTALL CORE PACKAGES ---
+echo ">> Installing Core Packages (Drivers, Codecs, Tools)..."
+rpm-ostree install -y \
+    # Shell & Utilities
     git zsh util-linux-user stow \
-    neovim distrobox task unzip plymouth-plugin-script
+    neovim distrobox task unzip plymouth-plugin-script \
+    android-tools \
+    # Drivers (Pre-layered for "It Just Works")
+    akmod-nvidia xorg-x11-drv-nvidia-cuda \
+    mesa-vulkan-drivers mesa-va-drivers \
+    # Lupine Sync (Mobile Integration)
+    kde-connect \
+    # Gaming (Proton/Wine ready)
+    wine winetricks lutris gamemode protontricks \
+    # Multimedia (Comprehensive Codec Support)
+    gstreamer1-plugin-openh264 mozilla-openh264 ffmpeg libavcodec-freeworld \
+    gstreamer1-plugin-libav gstreamer1-plugins-bad-free-extras gstreamer1-plugins-ugly-free
 
 # --- 3. VENDOR BINARIES ("The Managed Fix") ---
 echo ">> Installing Managed Binaries..."
@@ -73,5 +92,9 @@ tar xz -f /tmp/fd.tar.gz -C /tmp
 mv /tmp/fd-v10.2.0-x86_64-unknown-linux-musl/fd /usr/bin/fd
 chmod +x /usr/bin/fd
 rm -rf /tmp/fd*
+
+# --- 4. SYSTEM TEXT CONFIGURATION ---
+echo ">> Applying System Configurations..."
+dconf update
 
 echo ">> Native Installation Complete."

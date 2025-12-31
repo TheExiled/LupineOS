@@ -1,0 +1,17 @@
+[org/gnome/desktop/interface]
+color-scheme='prefer-dark'
+gtk-theme='Adwaita-dark'
+icon-theme='Adwaita'
+cursor-theme='Adwaita'
+font-name='Cantarell 11'
+
+[org/gnome/desktop/wm/preferences]
+theme='Adwaita-dark'
+
+[org/gnome/settings-daemon/plugins/media-keys]
+# Bind Search to Super+Space (Needs verifying if this conflicts with entry sources)
+# For COSMIC, it uses its own shortcuts, but this sets GNOME baseline.
+
+[org/gnome/desktop/wm/keybindings]
+# Restore "standard" window behavior
+close=['<Alt>F4']
