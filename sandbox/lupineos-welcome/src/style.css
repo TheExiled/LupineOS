@@ -1,6 +1,6 @@
 .navigation-sidebar {
-    background-color: @view_bg_color;
-    border-right: 1px solid @borders;
+    background-color: var(--view-bg-color);
+    border-right: 1px solid var(--sidebar-border-color);
 }
 
 .welcome-title {
