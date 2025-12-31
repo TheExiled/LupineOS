@@ -16,7 +16,19 @@ rpm-ostree install -y \
 # --- 2. INSTALL CORE TOOLS (RPMs) ---
 # --- 2. INSTALL CORE PACKAGES ---
 echo ">> Removing Conflicting Base Packages (restricted codecs)..."
-rpm-ostree override remove noopenh264 ffmpeg-free libavcodec-free
+# We must remove the entire 'free' stack to allow RPMFusion's full versions to install
+rpm-ostree override remove \
+    noopenh264 \
+    ffmpeg-free \
+    libavcodec-free \
+    libavdevice-free \
+    libavfilter-free \
+    libavformat-free \
+    libavutil-free \
+    libpostproc-free \
+    libswresample-free \
+    libswscale-free
+
 
 echo ">> Installing Core Packages (Drivers, Codecs, Tools)..."
 rpm-ostree install -y \
