@@ -23,7 +23,8 @@ rpm-ostree install -y \
     akmod-nvidia xorg-x11-drv-nvidia-cuda \
     mesa-vulkan-drivers mesa-va-drivers \
     kde-connect \
-    wine winetricks lutris gamemode protontricks \
+    # Gaming (Note: Wine/Lutris moved to Flatpak for stability)
+    gamemode \
     gstreamer1-plugin-openh264 mozilla-openh264 ffmpeg libavcodec-freeworld \
     gstreamer1-plugin-libav gstreamer1-plugins-bad-free-extras gstreamer1-plugins-ugly-free
 
