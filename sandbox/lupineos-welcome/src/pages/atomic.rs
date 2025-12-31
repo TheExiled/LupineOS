@@ -98,8 +98,12 @@ mod imp {
             
             let update_button = self.update_button.get();
             update_button.connect_clicked(|_| {
-                tracing::info!("Mock Logic: Triggering System Update (rpm-ostree upgrade)");
+                tracing::info!("Triggering System Update...");
+                if let Err(e) = crate::system::update_system() {
+                    tracing::error!("Failed to start update: {}", e);
+                }
             });
+
         }
     }
     impl WidgetImpl for AtomicPage {}

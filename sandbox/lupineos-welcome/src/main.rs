@@ -11,6 +11,8 @@ mod window;
 use window::LupineWelcomeWindow;
 
 mod pages;
+mod system;
+
 
 
 const APP_ID: &str = "org.lupineos.Welcome";

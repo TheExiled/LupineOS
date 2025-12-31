@@ -130,10 +130,14 @@ mod imp {
                 if chk_steam.is_active() { apps.push("steam"); }
 
                 if apps.is_empty() {
-                    tracing::warn!("Mock Logic: No apps selected to install.");
+                    tracing::warn!("No apps selected to install.");
                 } else {
-                    tracing::info!("Mock Logic: Batch Installing: {:?}", apps);
+                    tracing::info!("Batch Installing: {:?}", apps);
+                    if let Err(e) = crate::system::install_packages(&apps) {
+                        tracing::error!("Failed to start install: {}", e);
+                    }
                 }
+
             });
         }
     }

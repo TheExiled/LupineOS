@@ -127,13 +127,17 @@ mod imp {
             
             let dark_switch = self.dark_switch.get();
             dark_switch.connect_active_notify(|s| {
+                let is_dark = s.is_active();
+                crate::system::set_dark_mode(is_dark);
+                
                 let style_manager = adw::StyleManager::default();
-                if s.is_active() {
+                if is_dark {
                     style_manager.set_color_scheme(adw::ColorScheme::ForceDark);
                 } else {
                     style_manager.set_color_scheme(adw::ColorScheme::ForceLight);
                 }
             });
+
 
             // Mock Accent Colors
             let colors = [

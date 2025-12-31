@@ -1,0 +1,9 @@
+[Desktop Entry]
+Name=Welcome to LupineOS
+Comment=Get started with your new system
+Exec=lupineos-welcome
+Icon=system-software-install
+Terminal=false
+Type=Application
+Categories=GTK;GNOME;Utility;System;
+StartupNotify=true
