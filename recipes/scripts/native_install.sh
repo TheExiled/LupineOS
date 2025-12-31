@@ -17,18 +17,13 @@ rpm-ostree install -y \
 # --- 2. INSTALL CORE PACKAGES ---
 echo ">> Installing Core Packages (Drivers, Codecs, Tools)..."
 rpm-ostree install -y \
-    # Shell & Utilities
     git zsh util-linux-user stow \
     neovim distrobox task unzip plymouth-plugin-script \
     android-tools \
-    # Drivers (Pre-layered for "It Just Works")
     akmod-nvidia xorg-x11-drv-nvidia-cuda \
     mesa-vulkan-drivers mesa-va-drivers \
-    # Lupine Sync (Mobile Integration)
     kde-connect \
-    # Gaming (Proton/Wine ready)
     wine winetricks lutris gamemode protontricks \
-    # Multimedia (Comprehensive Codec Support)
     gstreamer1-plugin-openh264 mozilla-openh264 ffmpeg libavcodec-freeworld \
     gstreamer1-plugin-libav gstreamer1-plugins-bad-free-extras gstreamer1-plugins-ugly-free
 
