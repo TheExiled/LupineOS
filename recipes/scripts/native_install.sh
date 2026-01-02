@@ -23,13 +23,15 @@ rpm-ostree install -y \
     git zsh util-linux-user stow \
     neovim distrobox task unzip plymouth-plugin-script \
     android-tools \
-    akmod-nvidia xorg-x11-drv-nvidia-cuda \
     mesa-vulkan-drivers mesa-va-drivers \
     kde-connect \
     gamemode \
     gstreamer1-plugin-openh264 mozilla-openh264 libavcodec-freeworld \
     gstreamer1-plugin-libav gstreamer1-plugins-bad-free-extras gstreamer1-plugins-ugly-free \
     rust cargo gtk4-devel libadwaita-devel gettext-devel openssl-devel
+
+# Note: NVIDIA drivers removed from base image to prevent installer crashes
+# Users can install via: rpm-ostree install akmod-nvidia xorg-x11-drv-nvidia-cuda
 
 
 # --- 3. VENDOR BINARIES ("The Managed Fix") ---
