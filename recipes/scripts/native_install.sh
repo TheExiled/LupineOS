@@ -28,7 +28,9 @@ rpm-ostree install -y \
     kde-connect \
     gamemode \
     gstreamer1-plugin-openh264 mozilla-openh264 libavcodec-freeworld \
-    gstreamer1-plugin-libav gstreamer1-plugins-bad-free-extras gstreamer1-plugins-ugly-free
+    gstreamer1-plugin-libav gstreamer1-plugins-bad-free-extras gstreamer1-plugins-ugly-free \
+    rust cargo gtk4-devel libadwaita-devel gettext-devel openssl-devel
+
 
 # --- 3. VENDOR BINARIES ("The Managed Fix") ---
 echo ">> Installing Managed Binaries..."
@@ -95,4 +97,26 @@ rm -rf /tmp/fd*
 echo ">> Applying System Configurations..."
 dconf update
 
+# --- 5. INSTALL WELCOME APP ---
+echo ">> Installing LupineOS Welcome App..."
+WELCOME_SRC="$HOME/LupineOS/sandbox/lupineos-welcome"
+
+if [ -d "$WELCOME_SRC" ]; then
+    echo "   Building from source: $WELCOME_SRC"
+    pushd "$WELCOME_SRC"
+    cargo build --release
+    
+    echo "   Installing binary..."
+    cp target/release/lupineos-welcome /usr/bin/
+    chmod +x /usr/bin/lupineos-welcome
+    
+    echo "   Installing desktop entry..."
+    cp data/lupineos-welcome.desktop /usr/share/applications/
+    
+    popd
+else
+    echo "!! Welcome App source not found at $WELCOME_SRC. Skipping."
+fi
+
 echo ">> Native Installation Complete."
+
