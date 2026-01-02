@@ -94,29 +94,5 @@ chmod +x /usr/bin/fd
 rm -rf /tmp/fd*
 
 # --- 4. SYSTEM TEXT CONFIGURATION ---
-echo ">> Applying System Configurations..."
-dconf update
-
-# --- 5. INSTALL WELCOME APP ---
-echo ">> Installing LupineOS Welcome App..."
-WELCOME_SRC="$HOME/LupineOS/sandbox/lupineos-welcome"
-
-if [ -d "$WELCOME_SRC" ]; then
-    echo "   Building from source: $WELCOME_SRC"
-    pushd "$WELCOME_SRC"
-    cargo build --release
-    
-    echo "   Installing binary..."
-    cp target/release/lupineos-welcome /usr/bin/
-    chmod +x /usr/bin/lupineos-welcome
-    
-    echo "   Installing desktop entry..."
-    cp data/lupineos-welcome.desktop /usr/share/applications/
-    
-    popd
-else
-    echo "!! Welcome App source not found at $WELCOME_SRC. Skipping."
-fi
-
 echo ">> Native Installation Complete."
 
