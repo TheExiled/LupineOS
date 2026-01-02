@@ -15,6 +15,9 @@ rpm-ostree install -y \
 
 # --- 2. INSTALL CORE TOOLS (RPMs) ---
 # --- 2. INSTALL CORE PACKAGES ---
+echo ">> Allowing OpenH264 (Removing dummy package)..."
+rpm-ostree override remove noopenh264
+
 echo ">> Installing Core Packages (Drivers, Codecs, Tools)..."
 rpm-ostree install -y \
     git zsh util-linux-user stow \
