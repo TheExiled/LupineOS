@@ -12,7 +12,7 @@ jobs:
 
     steps:
       - name: Build ISO
-        uses: jasonn3/build-container-installer@v1.2.4
+        uses: jasonn3/build-container-installer@v1.4.0
         with:
           # --- CORRECTED VARIABLES ---
           
@@ -31,7 +31,7 @@ jobs:
           iso_name: lupineos-installer
 
       - name: Upload ISO
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v6
         with:
           name: lupineos-iso
           path: |
